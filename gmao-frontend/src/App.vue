@@ -1,85 +1,43 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+<!-- resources/js/components/CampusList.vue -->
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div>
+    <h1>Lista de Campus</h1>
+    <ul>
+      <li v-for="campus in campuses" :key="campus.idCampus">
+        {{ campus.nombre }}  <!-- Mostrar el nombre de cada campus -->
+      </li>
+    </ul>
+  </div>
 </template>
 
+<script>
+import axios from 'axios';  // Importar Axios para hacer solicitudes HTTP
+
+export default {
+  data() {
+    return {
+      campuses: [],  // Variable para almacenar los campus
+    };
+  },
+  mounted() {
+    this.fetchCampuses();  // Llamada al método para obtener los campus al montar el componente
+  },
+  methods: {
+    // Método para obtener los campus desde la API de Laravel
+    fetchCampuses() {
+      axios.get('http://127.0.0.1:8000/campuses')  // URL de la API de Laravel
+        .then(response => {
+          this.campuses = response.data;  // Asignar los datos obtenidos al arreglo 'campuses'
+        })
+        .catch(error => {
+          console.error('Error fetching campuses:', error);  // Manejo de errores
+        });
+    },
+  },
+};
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+/* Puedes agregar estilos aquí si lo necesitas */
 </style>
