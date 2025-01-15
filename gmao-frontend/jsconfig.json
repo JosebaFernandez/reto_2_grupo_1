@@ -4,5 +4,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*"], // Incluye solo los archivos en el directorio src
+  "exclude": ["node_modules", "dist", "src/components/HelloWorld.vue", "src/components/TheWelcome.vue", "src/components/WelcomeItem.vue", "src/views/AboutView.vue", "src/views/HomeView.vue"] // Excluye los archivos que ya no existen
 }

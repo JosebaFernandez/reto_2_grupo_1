@@ -15,7 +15,6 @@ export default {
   },
 };
 </script>
-
 <style>
 /* Puedes mantener estilos globales aquí si es necesario */
 body {
@@ -25,5 +24,4 @@ body {
   margin: 0;
   padding: 0;
 }
-
 </style>
