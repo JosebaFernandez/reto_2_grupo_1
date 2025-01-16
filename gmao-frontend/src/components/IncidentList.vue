@@ -1,60 +1,46 @@
 <template>
   <div>
     <h2 class="section-title">Incidencias</h2>
-    <div v-for="(incident, index) in incidents" :key="index" class="card">
+    <div v-for="incidencia in incidencias" :key="incidencia.idIncidencia" class="card">
       <div class="card-body">
-        <!-- Convertimos el título en un enlace -->
         <h5 class="card-title">
-          <router-link :to="{ name: 'IncidenciaView', params: { id: incident.id } }">
-            {{ incident.title }}
+          <router-link :to="{ name: 'IncidenciaView', params: { id: incidencia.idIncidencia } }">
+            {{ incidencia.titulo }}
           </router-link>
         </h5>
         <p class="card-text text-muted">
-          <small>{{ incident.date }}</small>
+          <small>{{ incidencia.fechaReporte }}</small>
         </p>
-        <p class="card-text">{{ incident.machine }}</p>
-        <p class="card-text">{{ incident.description }}</p>
-        <span :class="['badge', incident.statusClass]">{{ incident.status }}</span>
+        <p class="card-text">{{ incidencia.idMaquina }}</p>
+        <p class="card-text">{{ incidencia.descripcion }}</p>
+        <span :class="['badge', incidencia.estadoIncidencia]">{{ incidencia.estadoIncidencia }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "IncidentList",
   data() {
     return {
-      incidents: [
-        {
-          id: 1,
-          title: "Título 1",
-          date: "01/01/2025",
-          machine: "Máquina25",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          status: "Pendiente",
-          statusClass: "bg-danger text-white",
-        },
-        {
-          id: 2,
-          title: "Título 2",
-          date: "01/01/2025",
-          machine: "Máquina25",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          status: "Resuelta",
-          statusClass: "bg-success text-white",
-        },
-        {
-          id: 3,
-          title: "Título 3",
-          date: "01/01/2025",
-          machine: "Máquina25",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          status: "En curso",
-          statusClass: "bg-warning text-dark",
-        },
-      ],
+      incidencias: [], // Inicializamos como array vacío
     };
+  },
+  created() {
+    this.fetchIncidents();
+  },
+  methods: {
+    async fetchIncidents() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/incidences'); // Ajusta la URL según tu API
+        this.incidencias = response.data;
+      } catch (error) {
+        console.error('Error al obtener las incidencias:', error);
+      }
+    },
   },
 };
 </script>
