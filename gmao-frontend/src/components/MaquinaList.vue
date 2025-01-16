@@ -12,7 +12,7 @@
             <small>{{ maquina.idMaquina }}</small>
           </p>
           <p class="card-text">{{ maquina.prioridad }}</p>
-          <p class="card-text">{{ maquina.idCampus }}</p>
+          <p class="card-text">{{ getCampusName(maquina.idCampus) }}</p>
           <p class="card-text">{{ maquina.idSeccion }}</p>
         </div>
       </div>
@@ -24,6 +24,12 @@
   
   export default {
     name: "MaquinaList",
+    props: {
+    campuses: {
+      type: Array,
+      required: true,
+    },
+  },
     data() {
       return {
         maquinas: [], // Inicializamos como array vacío
@@ -38,11 +44,15 @@
           const response = await axios.get(
             "http://127.0.0.1:8000/api/machines"
           ); // Ajusta la URL según tu API
-          this.incidencias = response.data;
+          this.maquinas = response.data; // Asignamos los datos a this.maquinas
         } catch (error) {
           console.error("Error al obtener las maquinas:", error);
         }
       },
+    getCampusName(id) {
+      const campus = this.campuses.find((campus) => campus.idCampus === id);
+      return campus ? campus.nombre : "Desconocido";
+    },
     },
   };
   </script>
@@ -74,4 +84,3 @@
     text-decoration: underline;
   }
   </style>
-  

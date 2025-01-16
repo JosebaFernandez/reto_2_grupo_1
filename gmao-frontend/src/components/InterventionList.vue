@@ -1,6 +1,10 @@
 <template>
-    <div>
-      <h2 class="section-title">Intervenciones</h2>
+  <div>
+    <h2 class="section-title">Intervenciones</h2>
+    <div v-if="intervenciones.length === 0">
+      <p>No hay intervenciones disponibles.</p>
+    </div>
+    <div v-else>
       <div v-for="intervencion in intervenciones" :key="intervencion.idIntervencion" class="card">
         <div class="intervenciones">
           <p class="card-text">{{ intervencion.idTecnico }} <b>FALTA NOMBRE DEL TECNICO</b></p>
@@ -9,8 +13,8 @@
         </div>
       </div>
     </div>
-
-  </template>
+  </div>
+</template>
   
   
   <script>
