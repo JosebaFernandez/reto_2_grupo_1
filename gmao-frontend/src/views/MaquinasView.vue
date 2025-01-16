@@ -7,7 +7,7 @@
             </div>
 
             <!-- Formulario de reporte (columna de 4 unidades) -->
-            <div class="col-sm-4">
+            <div class="col-sm-4 fixed-right">
                 <MaquinaForm />
             </div>
         </div>
@@ -32,5 +32,9 @@ export default {
 .main-container {
     padding-top: 80px;
     /* Espacio para la cabecera fija */
+}
+.fixed-right {
+  position: fixed;
+  right: 20px;
 }
 </style>

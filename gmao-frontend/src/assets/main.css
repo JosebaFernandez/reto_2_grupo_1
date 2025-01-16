@@ -14,11 +14,15 @@
   transition: 0.4s;
   padding: 3px;
 }
+a{
+  color: black;
+  text-decoration: none;
+}
 
 @media (hover: hover) {
   a:hover {
     background-color: purple;
-    color: white
+    color: white;
   }
 }
 
