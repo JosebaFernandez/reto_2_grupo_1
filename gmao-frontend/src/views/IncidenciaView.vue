@@ -3,12 +3,10 @@
         <div class="row">
             <!-- Lista de incidencias (columna de 8 unidades) -->
             <div class="col-sm-8">
-                <IncidentDetail />
-            </div>
-
-            <!-- Formulario de reporte (columna de 4 unidades) -->
+                <IncidentDetail :idIncidencia="idIncidencia" />
+            </div>            <!-- Formulario de reporte (columna de 4 unidades) -->
             <div class="col-sm-4">
-                <InterventionList />
+                <InterventionList :idIncidencia="idIncidencia" />
             </div>
         </div>
     </div>
@@ -23,6 +21,11 @@ export default {
     components: {
         IncidentDetail,
         InterventionList,
+    },
+    data() {
+        return {
+            idIncidencia: this.$route.params.id,
+        };
     },
 };
 </script>
