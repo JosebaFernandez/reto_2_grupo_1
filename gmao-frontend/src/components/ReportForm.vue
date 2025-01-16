@@ -47,6 +47,7 @@
   
   <style scoped>
   .report-form {
+    max-width: none;
     background-color: white;
     border: 1px solid #ccc;
     padding: 20px;
