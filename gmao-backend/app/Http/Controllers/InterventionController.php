@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Intervention;
 
-class InterventionController extends Controller
+class InterventionController
 {
-    public function getInterventionsByIncidencia($idIncidencia)
+    public function getIntervenciones($idIncidencia)
     {
-        $interventions = Intervention::where('idIncidencia', $idIncidencia)->get();
-        return response()->json($interventions);
+        $intervenciones = Intervention::where('idIncidencia', $idIncidencia)->get();
+        return response()->json($intervenciones);
     }
 }
