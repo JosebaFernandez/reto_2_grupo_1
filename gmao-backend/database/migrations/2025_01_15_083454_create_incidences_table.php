@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('idIncidencia');
             $table->unsignedBigInteger('idMaquina');
             $table->date('fechaReporte');
+            $table->string('titulo');
             $table->string('descripcion');
             $table->date('fechaResolucion')->nullable();
             $table->string('estadoIncidencia');
