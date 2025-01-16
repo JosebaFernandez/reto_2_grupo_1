@@ -13,14 +13,17 @@
         </p>
         <p class="card-text">{{ incidencia.idMaquina }}</p>
         <p class="card-text">{{ incidencia.descripcion }}</p>
-        <span :class="['badge', incidencia.estadoIncidencia]">{{ incidencia.estadoIncidencia }}</span>
+        <!-- Badge con clase dinámica -->
+        <span :class="['badge', getBadgeClass(incidencia.estadoIncidencia)]">
+          {{ incidencia.estadoIncidencia }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "IncidentList",
@@ -35,10 +38,25 @@ export default {
   methods: {
     async fetchIncidents() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/incidences'); // Ajusta la URL según tu API
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/incidences"
+        ); // Ajusta la URL según tu API
         this.incidencias = response.data;
       } catch (error) {
-        console.error('Error al obtener las incidencias:', error);
+        console.error("Error al obtener las incidencias:", error);
+      }
+    },
+    // Método para obtener la clase según el estado del incidente
+    getBadgeClass(estado) {
+      switch (estado) {
+        case "Pendiente":
+          return "bg-danger text-white";
+        case "Resuelta":
+          return "bg-success text-white";
+        case "En Progreso":
+          return "bg-warning text-dark";
+        default:
+          return "bg-secondary text-white"; // Clase por defecto
       }
     },
   },
@@ -76,5 +94,22 @@ export default {
   font-size: 0.9rem;
   padding: 5px 10px;
   border-radius: 5px;
+}
+
+.bg-danger {
+  background-color: #dc3545;
+}
+
+.bg-success {
+  background-color: #28a745;
+}
+
+.bg-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.bg-secondary {
+  background-color: #6c757d;
 }
 </style>

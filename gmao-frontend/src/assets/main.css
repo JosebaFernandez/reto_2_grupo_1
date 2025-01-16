@@ -7,7 +7,7 @@
   font-weight: normal;
 }
 
-a,
+
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
@@ -17,7 +17,8 @@ a,
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: purple;
+    color: white
   }
 }
 

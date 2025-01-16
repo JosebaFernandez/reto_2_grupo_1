@@ -3,26 +3,27 @@
         <div class="row">
             <!-- Lista de incidencias (columna de 8 unidades) -->
             <div class="col-sm-8">
-                <IncidentDetail />
+                <MaquinaList />
             </div>
 
             <!-- Formulario de reporte (columna de 4 unidades) -->
             <div class="col-sm-4">
-                <InterventionList />
+                <MaquinaForm />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import IncidentDetail from "@/components/IncidentDetail.vue";
-import InterventionList from "@/components/InterventionList.vue";
+
+import MaquinaForm from "@/components/MaquinaForm.vue";
+import MaquinaList from "@/components/MaquinaList.vue";
 
 export default {
-    name: "Incidencia",
+    name: "Maquinas",
     components: {
-        IncidentDetail,
-        InterventionList,
+        MaquinaList,
+        MaquinaForm,
     },
 };
 </script>
