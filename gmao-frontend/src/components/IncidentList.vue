@@ -33,10 +33,10 @@ export default {
     };
   },
   created() {
-    this.fetchIncidents();
+    this.fetchIncidences();
   },
   methods: {
-    async fetchIncidents() {
+    async fetchIncidences() {
       try {
         const response = await axios.get(
           "http://127.0.0.1:8000/api/incidences"

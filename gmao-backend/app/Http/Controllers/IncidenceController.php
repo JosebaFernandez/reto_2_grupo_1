@@ -14,20 +14,12 @@ class IncidenceController
         return response()->json($incidencias);
     }
 
-    public function view($idIncidencia)
+    public function getIncidencia($idIncidencia) 
     {
         $incidencia = Incidence::find($idIncidencia);
-
-        if ($incidencia) {
-
-            $intervenciones = Intervention::where('idIncidencia', $idIncidencia)->get();
-
-            return response()->json(
-            [
-            'incidencia' => $incidencia,
-            'intervenciones' => $intervenciones
-            ]);
-
-        } else return response()->json(['error' => 'Incidencia no encontrada'], 404);
-    } 
+        if (!$incidencia) {
+            return response()->json(['message' => 'Incidence not found'], 404);
+        }
+        return response()->json($incidencia);
+    }
 }

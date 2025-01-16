@@ -1,42 +1,49 @@
 <template>
     <div class="incident-detail">
       <div class="incident-header">
-        <h2 class="incident-title">{{ incident.title }}</h2>
-        <span :class="['badge', incident.statusClass]">{{ incident.status }}</span>
+        <h2 class="incident-title">{{ incidencia.titulo }}</h2>
+        <span>{{ incidencia.estadoIncidencia }}</span>
+        <!-- :class="['badge', incident.statusClass]" -->
       </div>
       <ul class="incident-info">
         <li>
-          <span class="info-label">Fecha:</span> {{ incident.date }}
+          <span class="info-label">Fecha:</span> {{ incidencia.fechaReporte }}
         </li>
         <li>
-          <span class="info-label">Máquina:</span> {{ incident.machine }}
+          <span class="info-label">Máquina:</span> {{ incidencia.idMaquina }}
         </li>
         <li>
-          <span class="info-label">Gravedad:</span> {{ incident.severity }}
+          <span class="info-label">Gravedad: FALTA IMPLEMENTAR</span>
         </li>
         <li>
-          <p class="incident-description">{{ incident.description }}</p>
+          <p class="incident-description">{{ incidencia.descripcion }}</p>
         </li>
       </ul>
     </div>
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
+    props: ['idIncidencia'],
     name: "IncidentDetail",
     data() {
-      return {
-        incident: {
-          title: "Título",
-          date: "01/01/2025",
-          machine: "Máquina25",
-          severity: "Aviso",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          status: "Resuelta",
-          statusClass: "bg-success text-white",
-        },
-      };
+    return {
+      incidencia: [],
+    };
+    },
+    created() {
+      this.fetchIncidence();
+    },
+    methods: {
+      async fetchIncidence() {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/incidences/' + this.idIncidencia);
+          this.incidencia = response.data;
+        } catch (error) {
+          console.error('Error al obtener la incidencia:', error);
+        }
+      },
     },
   };
   </script>
