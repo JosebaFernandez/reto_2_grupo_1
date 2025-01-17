@@ -11,10 +11,10 @@
         <span class="info-label">Fecha:</span> {{ incidencia.fechaReporte }}
       </li>
       <li>
-        <span class="info-label">Máquina:</span> {{ incidencia.idMaquina }} <!--¿Igual mejor el nombre?-->
+        <span class="info-label">Máquina:</span> {{ incidencia.idMaquina }}
       </li>
       <li>
-        <span class="info-label">Gravedad: FALTA IMPLEMENTAR</span>
+        <span class="info-label">Gravedad:</span> {{ incidencia.gravedad }}
       </li>
       <li>
         <span class="info-label">Tipo de avería: FALTA IMPLEMENTAR</span>
