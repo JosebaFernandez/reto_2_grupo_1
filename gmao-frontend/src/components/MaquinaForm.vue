@@ -12,30 +12,24 @@
             </div>
             <div class="mb-3">
                 <label for="machineCampus" class="form-label">Selecciona el campus:</label>
-                <select id="machineCampus" class="form-select">
-                    <option value="1">Arriaga</option>
-                    <option value="2">Mendizorroza</option>
-                    <option value="3">Molinuevo</option>
-                    <option value="4">Nieves Cano</option>
-                    <option value="5">Jesús Obrero</option>
+                <select id="machineCampus" class="form-select" v-model="selectedMaquina">
+                    <option v-for="campus in campuses" :key="campus.id" :value="campus.id">
+                        {{ campus.nombre }}
+                    </option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="machineSection" class="form-label">Selecciona la seccion:</label>
-                <select id="machineSection" class="form-select">
-                    <option value="5010">Taller Mecánico 1 010</option>
-                    <option value="5011">Taller Aurrera XXI</option>
-                    <option value="5012">Taller Mecánico 2 012</option>
-                    <option value="5014">Taller Control Numérico 014</option>
-                    <option value="5017">Taller Mecánico 3 017</option>
-                    <option value="5018">Taller Mecánico 4 018</option>
-                    <option value="5019">Taller Metrologia</option>
-                    <option value="5024">Taller Neumática</option>
+                <select id="machineSection" class="form-select" v-model="selectedMaquina">
+                    <option v-for="seccion in secciones" :key="seccion.id" :value="seccion.id">
+                        {{ seccion.nombre }}
+                    </option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="machinePriority" class="form-label">Selecciona la prioridad:</label>
                 <select id="machinePriority" class="form-select">
+                    <option value=""></option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -46,11 +40,45 @@
     </div>
 </template>
 
-<script>
+<!--<script>
+import axios from "axios";
+
 export default {
-    name: "MaquinaForm",
+  name: "MaquinaForm",
+  data() {
+    return {
+      campuses: [], 
+      secciones: [], 
+      selectedCampus: "", 
+      selectedSeccion: "",
+    };
+  },
+  created() {
+    this.fetchCampuses();
+    this.fetchSecciones();
+  },
+  methods: {
+    async fetchMaquinas() {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/campus"
+        ); // Ajusta la URL según tu API
+        this.maquinas = response.data; // Guardamos los datos de las máquinas
+      } catch (error) {
+        console.error("Error al obtener los campus:", error);
+      }
+    },
+    async fetchAverias() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/sections"); // Ajusta la URL según tu API
+        this.averias = response.data; // Guardamos los datos de los tipos de avería
+      } catch (error) {
+        console.error("Error al obtener las secciones:", error);
+      }
+    },
+  },
 };
-</script>
+</script>-->
 
 <style scoped>
 .register-form {

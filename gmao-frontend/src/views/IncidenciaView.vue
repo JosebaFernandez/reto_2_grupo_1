@@ -42,6 +42,6 @@ export default {
 }
 
 .right {
-  margin-left: 950px; 
+  margin-left: 73%; 
 }
 </style>

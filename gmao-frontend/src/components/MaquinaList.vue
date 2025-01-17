@@ -4,16 +4,14 @@
       <div v-for="maquina in maquinas" :key="maquina.idMaquina" class="card">
         <div class="card-body">
           <h5 class="card-title">
-            <router-link :to="{ name: 'MaquinasView', params: { id: maquina.idMaquina } }">
               {{ maquina.nombre }}
-            </router-link>
           </h5>
           <p class="card-text text-muted">
             <small>{{ maquina.idMaquina }}</small>
           </p>
-          <p class="card-text">{{ maquina.prioridad }}</p>
-          <p class="card-text">{{ getCampusName(maquina.idCampus) }}</p>
-          <p class="card-text">{{ maquina.idSeccion }}</p>
+          <p class="card-text"><b>Prioridad: </b>{{ maquina.prioridad }}</p>
+          <p class="card-text"><b>Campus: </b>{{ getCampusName(maquina.idCampus) }}</p>
+          <p class="card-text"> <b>Seccion: </b> {{ maquina.idSeccion }}</p>
         </div>
       </div>
     </div>
@@ -75,12 +73,4 @@
     font-weight: bold;
   }
   
-  .card-title a {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  .card-title a:hover {
-    text-decoration: underline;
-  }
   </style>
