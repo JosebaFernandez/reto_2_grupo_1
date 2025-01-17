@@ -12,13 +12,8 @@
           <small>{{ incidencia.fechaReporte }}</small>
         </p>
         <p class="card-text">{{ incidencia.machine.nombre }}</p>
-        <p class="card-text">{{ incidencia.gravedad }}</p>
+        <p class="card-text">Gravedad: {{ incidencia.gravedad }}</p>
         <p class="card-text">{{ incidencia.descripcion }}</p>
-
-        <!-- Badge con clase dinámica -->
-        <span :class="['badge', getBadgeClass(incidencia.estadoIncidencia)]">
-          {{ incidencia.estadoIncidencia }}
-        </span>
       </div>
     </div>
   </div>
