@@ -11,5 +11,6 @@ class SectionController
     {
         $sections = Section::all();
         return response()->json($sections);
+        
     }
 }
