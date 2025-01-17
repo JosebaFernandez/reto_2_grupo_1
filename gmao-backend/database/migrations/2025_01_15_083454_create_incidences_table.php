@@ -21,9 +21,12 @@ return new class extends Migration
             $table->string('estadoIncidencia');
             $table->string('estadoMaquina');
             $table->boolean('habilitada');
+            $table->string('gravedad');
+            $table->unsignedBigInteger('idAveria');
             $table->timestamps();
 
             $table->foreign('idMaquina')->references('idMaquina')->on('machines');
+            $table->foreign('idAveria')->references('idAveria')->on('breakdowns');
         });
     }
 

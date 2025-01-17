@@ -11,7 +11,7 @@
         <span class="info-label">Fecha:</span> {{ incidencia.fechaReporte }}
       </li>
       <li>
-        <span class="info-label">Máquina:</span> {{ incidencia.idMaquina }} 
+        <span class="info-label">Máquina:</span> {{ incidencia.idMaquina }}
       </li>
       <li>
         <span class="info-label">Gravedad:</span> {{ incidencia.gravedad }}

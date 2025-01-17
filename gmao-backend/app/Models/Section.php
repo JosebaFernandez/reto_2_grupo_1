@@ -12,4 +12,6 @@ class Section extends Model
     protected $table = 'sections';
     protected $primaryKey = 'idSeccion';
     public $timestamps = true;
+
+    protected $fillable = ['nombre'];
 }
