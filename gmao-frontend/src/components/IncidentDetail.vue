@@ -8,13 +8,13 @@
         <span class="info-label">Fecha:</span> {{ incidencia.fechaReporte }}
       </li>
       <li>
-        <span class="info-label">Máquina:</span> {{ incidencia.idMaquina }}
+        <span class="info-label">Máquina:</span> {{ incidencia.machine.nombre }}
       </li>
       <li>
         <span class="info-label">Gravedad:</span> {{ incidencia.gravedad }}
       </li>
       <li>
-        <span class="info-label">Tipo de avería:</span>  {{ incidencia.idAveria }}
+        <span class="info-label">Tipo de avería:</span>  {{ incidencia.breakdown.nombre }}
       </li>
       <li>
         <p class="incident-description">{{ incidencia.descripcion }}</p>
@@ -30,7 +30,10 @@ export default {
   name: "IncidentDetail",
   data() {
     return {
-      incidencia: [],
+      incidencia: {
+        breakdown: { nombre: '' },
+        machine: { nombre: '' },
+      },
     };
   },
   created() {

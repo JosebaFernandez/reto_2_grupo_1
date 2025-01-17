@@ -28,4 +28,9 @@ class Incidence extends Model
     {
         return $this->belongsTo(Machine::class, 'idMaquina', 'idMaquina');
     }
+
+    public function breakdown()
+    {
+        return $this->hasOne(Breakdown::class, 'idAveria', 'idAveria');
+    }
 }

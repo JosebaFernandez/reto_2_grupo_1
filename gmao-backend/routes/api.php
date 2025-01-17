@@ -9,8 +9,8 @@ use App\Http\Controllers\MachinesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\BreakdownController;
-
 use App\Http\Controllers\SectionController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
