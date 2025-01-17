@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="section-title">Reportar</h2>
-    <form class="report-form">
+    <form class="report-form" @submit.prevent="submitReport">
       <div class="mb-3">
         <label for="machine" class="form-label">Selecciona la máquina:</label>
         <select id="maquina" class="form-select" v-model="selectedMaquina">
@@ -12,7 +12,7 @@
       </div>
       <div class="mb-3">
         <label for="severity" class="form-label">Selecciona la gravedad:</label>
-        <select id="severity" class="form-select">
+        <select id="severity" class="form-select" v-model="selectedSeverity">
           <option value=""></option>
           <option value="Parada">Máquina parada</option>
           <option value="Marcha">Máquina en marcha</option>
@@ -29,7 +29,7 @@
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Describe la incidencia:</label>
-        <textarea id="description" class="form-control" rows="5"></textarea>
+        <textarea id="description" class="form-control" rows="5" v-model="description"></textarea>
       </div>
       <button type="submit" class="btn btn-reportar w-100">Reportar</button>
     </form>
@@ -43,10 +43,12 @@ export default {
   name: "ReportForm",
   data() {
     return {
-      maquinas: [], // Almacenará las máquinas obtenidas de la API
-      averias: [], // Almacenará las averías obtenidos de la API
-      selectedMaquina: "", // Almacena el id de la máquina seleccionada
-      selectedAveria: "", // Almacena el id de la avería seleccionada
+      maquinas: [],
+      averias: [],
+      selectedMaquina: "",
+      selectedAveria: "",
+      selectedSeverity: "",
+      description: "",
     };
   },
   created() {
@@ -58,18 +60,42 @@ export default {
       try {
         const response = await axios.get(
           "http://127.0.0.1:8000/api/machines"
-        ); // Ajusta la URL según tu API
-        this.maquinas = response.data; // Guardamos los datos de las máquinas
+        ); 
+        this.maquinas = response.data; 
       } catch (error) {
         console.error("Error al obtener las máquinas:", error);
       }
     },
     async fetchAverias() {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/breakdowns"); // Ajusta la URL según tu API
-        this.averias = response.data; // Guardamos los datos de los tipos de avería
+        const response = await axios.get("http://127.0.0.1:8000/api/breakdowns");
+        this.averias = response.data;
       } catch (error) {
         console.error("Error al obtener las averías:", error);
+      }
+    },
+    async submitReport() {
+      try {
+        const reportData = {
+          machine_id: this.selectedMaquina,
+          breakdown_id: this.selectedAveria,
+          severity: this.selectedSeverity,
+          description: this.description,
+        };
+
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/incidences/store",
+          reportData
+        );
+
+        this.selectedMaquina = "";
+        this.selectedAveria = "";
+        this.selectedSeverity = "";
+        this.description = "";
+
+        alert("Incidencia registrada correctamente");
+      } catch (error) {
+        console.error("Error al enviar la incidencia:", error);
       }
     },
   },

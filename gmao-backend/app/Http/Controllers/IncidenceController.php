@@ -25,4 +25,7 @@ class IncidenceController
         }
         return response()->json($incidencia);
     }
+
+    public function store() 
+    {}
 }

@@ -27,3 +27,5 @@ Route::get('/incidences/{idIncidencia}', [IncidenceController::class, 'getIncide
 Route::get('/interventions/{idIncidencia}', [InterventionController::class, 'getIntervenciones']);
 
 Route::get('/sections', [SectionController::class, 'index']);
+
+Route::post('/incidences/store', [IncidenceController::class, 'store']);
