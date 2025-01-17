@@ -9,7 +9,7 @@ class InterventionController
 {
     public function getIntervenciones($idIncidencia)
     {
-        $intervenciones = Intervention::where('idIncidencia', $idIncidencia)->get();
+        $intervenciones = Intervention::with('tecnico')->where('idIncidencia', $idIncidencia)->get();
         return response()->json($intervenciones);
     }
 }

@@ -7,8 +7,8 @@
     <div v-else>
       <div v-for="intervencion in intervenciones" :key="intervencion.idIntervencion" class="card">
         <div class="intervenciones">
-          <p class="card-text">{{ intervencion.idTecnico }} <b>FALTA NOMBRE DEL TECNICO</b></p>
-          <p class="card-text">{{ intervencion.fechaInicio }}-{{ intervencion.fechaFin }}</p>
+          <p class="card-text">{{ intervencion.tecnico.nombre + " " + intervencion.tecnico.apellido }}</p>
+          <p class="card-text">{{ intervencion.fechaInicio }} - {{ intervencion.fechaFin }}</p>
           <p class="card-text">{{ intervencion.notas }}</p>
         </div>
       </div>

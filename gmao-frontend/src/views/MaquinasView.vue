@@ -10,9 +10,8 @@
                 <MaquinaForm />
             </div>
         </div>
-      </div>
     </div>
-  </template>
+</template>
 
 <script>
 

@@ -10,13 +10,14 @@ class IncidenceController
 {
     public function index()
     {
-        $incidencias = Incidence::all();
+        $incidencias = Incidence::with('machine')->get();
+        
         return response()->json($incidencias);
     }
 
     public function getIncidencia($idIncidencia) 
     {
-        $incidencia = Incidence::find($idIncidencia);
+        $incidencia = Incidence::with('machine')->find($idIncidencia);
         if (!$incidencia) {
             return response()->json(['message' => 'Incidence not found'], 404);
         }
