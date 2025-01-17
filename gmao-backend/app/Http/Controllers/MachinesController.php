@@ -9,7 +9,7 @@ class MachinesController
 {
     public function index()
     {
-        $machines = Machine::all();
+        $machines = Machine::with('section')->get();
         return response()->json($machines);
     }
 }

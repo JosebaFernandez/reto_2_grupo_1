@@ -11,9 +11,9 @@
           <p class="card-text text-muted">
             <small>{{ maquina.idMaquina }}</small>
           </p>
-          <p class="card-text">{{ maquina.prioridad }}</p>
+          <p class="card-text">Prioridad: {{ maquina.prioridad }}</p>
           <p class="card-text">{{ getCampusName(maquina.idCampus) }}</p>
-          <p class="card-text">{{ maquina.idSeccion }}</p>
+          <p class="card-text">{{ maquina.section.nombre }}</p>
         </div>
       </div>
     </div>
