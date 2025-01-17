@@ -17,7 +17,7 @@
         <span class="info-label">Gravedad:</span> {{ incidencia.gravedad }}
       </li>
       <li>
-        <span class="info-label">Tipo de avería: FALTA IMPLEMENTAR</span>
+        <span class="info-label">Tipo de avería:</span>  {{ incidencia.idAveria }}
       </li>
       <li>
         <p class="incident-description">{{ incidencia.descripcion }}</p>
