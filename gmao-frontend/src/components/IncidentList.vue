@@ -81,15 +81,6 @@ export default {
   font-weight: bold;
 }
 
-.card-title a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-.card-title a:hover {
-  text-decoration: underline;
-}
-
 .badge {
   font-size: 0.9rem;
   padding: 5px 10px;

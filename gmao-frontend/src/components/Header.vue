@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h1 class="logo">Egibide</h1>
+    <img src="../assets/logo_egibide.png" alt="Logo" width="150px" />
     <div class="menu"> <router-link :to="{ name: 'Home' }">
         Home
       </router-link></div>
@@ -35,12 +35,6 @@ export default {
   width: 100%;
   z-index: 1000;
 }
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
 .user {
   font-size: 1rem;
 }
