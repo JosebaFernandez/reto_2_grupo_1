@@ -11,14 +11,9 @@
         <p class="card-text text-muted">
           <small>{{ incidencia.fechaReporte }}</small>
         </p>
-        <p class="card-text">{{ incidencia.machine.nombre }}</p>
-        <p class="card-text">{{ incidencia.gravedad }}</p>
-        <p class="card-text">{{ incidencia.descripcion }}</p>
-
-        <!-- Badge con clase dinámica -->
-        <span :class="['badge', getBadgeClass(incidencia.estadoIncidencia)]">
-          {{ incidencia.estadoIncidencia }}
-        </span>
+        <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
+        <p class="card-text"><b>Gravedad: </b>{{ incidencia.gravedad }}</p>
+        <p class="card-text"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
       </div>
     </div>
   </div>
@@ -48,19 +43,6 @@ export default {
         console.error("Error al obtener las incidencias:", error);
       }
     },
-    // Método para obtener la clase según el estado del incidente
-    getBadgeClass(estado) {
-      switch (estado) {
-        case "Pendiente":
-          return "bg-danger text-white";
-        case "Resuelta":
-          return "bg-success text-white";
-        case "En Progreso":
-          return "bg-warning text-dark";
-        default:
-          return "bg-secondary text-white"; // Clase por defecto
-      }
-    },
   },
 };
 </script>
@@ -83,26 +65,5 @@ export default {
   font-weight: bold;
 }
 
-.badge {
-  font-size: 0.9rem;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
 
-.bg-danger {
-  background-color: #dc3545;
-}
-
-.bg-success {
-  background-color: #28a745;
-}
-
-.bg-warning {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-.bg-secondary {
-  background-color: #6c757d;
-}
 </style>

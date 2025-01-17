@@ -1,7 +1,7 @@
 <template>
     <div>
       <h2 class="section-title">Usuarios</h2>
-      <div v-for="usuario in usuarios" :key="usuario.idUsuario" class="card">
+      <div v-for="usuario in users" :key="usuario.idUsuario" class="card">
         <div class="card-body">
           <h5 class="card-title">
             {{ usuario.nombre }} {{ usuario.apellido }}
@@ -22,7 +22,7 @@
     name: "UsuarioList",
     data() {
       return {
-        usuarios: [], // Inicializamos como array vacío
+        users: [], 
       };
     },
     created() {
@@ -31,10 +31,8 @@
     methods: {
       async fetchUsuarios() {
         try {
-          const response = await axios.get(
-            "http://127.0.0.1:8000/api/users"
-          ); // Ajusta la URL según tu API
-          this.incidencias = response.data;
+          const response = await axios.get("http://127.0.0.1:8000/api/users"); // Ajusta la URL según tu API
+          this.users = response.data; 
         } catch (error) {
           console.error("Error al obtener los usuarios:", error);
         }
