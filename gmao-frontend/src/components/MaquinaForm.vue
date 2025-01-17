@@ -13,6 +13,7 @@
             <div class="mb-3">
                 <label for="machineCampus" class="form-label">Selecciona el campus:</label>
                 <select id="machineCampus" class="form-select" v-model="selectedMaquina">
+            
                     <option v-for="campus in campuses" :key="campus.id" :value="campus.id">
                         {{ campus.nombre }}
                     </option>
@@ -21,6 +22,7 @@
             <div class="mb-3">
                 <label for="machineSection" class="form-label">Selecciona la seccion:</label>
                 <select id="machineSection" class="form-select" v-model="selectedMaquina">
+
                     <option v-for="seccion in secciones" :key="seccion.id" :value="seccion.id">
                         {{ seccion.nombre }}
                     </option>
@@ -29,7 +31,7 @@
             <div class="mb-3">
                 <label for="machinePriority" class="form-label">Selecciona la prioridad:</label>
                 <select id="machinePriority" class="form-select">
-                    <option value=""></option>
+
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -40,7 +42,7 @@
     </div>
 </template>
 
-<!--<script>
+<script>
 import axios from "axios";
 
 export default {
@@ -58,27 +60,25 @@ export default {
     this.fetchSecciones();
   },
   methods: {
-    async fetchMaquinas() {
+    async fetchCampuses() {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/campus"
-        ); // Ajusta la URL según tu API
-        this.maquinas = response.data; // Guardamos los datos de las máquinas
+        const response = await axios.get("http://127.0.0.1:8000/api/campuses"); // Ajusta la URL según tu API
+        this.campuses = response.data; // Guardamos los datos de las máquinas
       } catch (error) {
         console.error("Error al obtener los campus:", error);
       }
     },
-    async fetchAverias() {
+    async fetchSecciones() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/sections"); // Ajusta la URL según tu API
-        this.averias = response.data; // Guardamos los datos de los tipos de avería
+        this.secciones = response.data; // Guardamos los datos de los tipos de avería
       } catch (error) {
         console.error("Error al obtener las secciones:", error);
       }
     },
   },
 };
-</script>-->
+</script>
 
 <style scoped>
 .register-form {

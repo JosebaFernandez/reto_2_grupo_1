@@ -2,6 +2,7 @@
   <div class="incident-detail">
     <div class="incident-header">
       <h2 class="incident-title">{{ incidencia.titulo }}</h2>
+
     </div>
     <ul class="incident-info">
       <li>
@@ -18,6 +19,7 @@
       </li>
       <li>
         <p class="incident-description">{{ incidencia.descripcion }}</p>
+        <button type="submit" class="btn btn-registrar w-100">Tomar Incidencia</button>
       </li>
     </ul>
   </div>
@@ -46,19 +48,6 @@ export default {
         this.incidencia = response.data;
       } catch (error) {
         console.error('Error al obtener la incidencia:', error);
-      }
-    },
-    // Método para obtener la clase según el estado del incidente
-    getBadgeClass(estado) {
-      switch (estado) {
-        case "Pendiente":
-          return "bg-danger text-white";
-        case "Resuelta":
-          return "bg-success text-white";
-        case "En Progreso":
-          return "bg-warning text-dark";
-        default:
-          return "bg-secondary text-white"; // Clase por defecto
       }
     },
   },
@@ -99,13 +88,13 @@ export default {
   font-style: italic;
 }
 
-.badge {
-  font-size: 0.85rem;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
+
 
 .text-white {
   color: white;
+}
+.btn-registrar {
+    background-color: #84005d;
+    color: white;
 }
 </style>
