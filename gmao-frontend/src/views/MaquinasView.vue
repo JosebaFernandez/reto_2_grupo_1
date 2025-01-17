@@ -15,7 +15,7 @@
 
 
 <script>
-
+  
 import MaquinaForm from "@/components/MaquinaForm.vue";
 import MaquinaList from "@/components/MaquinaList.vue";
 import axios from "axios";

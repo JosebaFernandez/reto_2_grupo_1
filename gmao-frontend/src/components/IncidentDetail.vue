@@ -2,9 +2,6 @@
   <div class="incident-detail">
     <div class="incident-header">
       <h2 class="incident-title">{{ incidencia.titulo }}</h2>
-      <span :class="['badge', getBadgeClass(incidencia.estadoIncidencia)]">
-        {{ incidencia.estadoIncidencia }}
-      </span>
     </div>
     <ul class="incident-info">
       <li>
