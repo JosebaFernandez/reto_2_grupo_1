@@ -31,7 +31,7 @@
         <div class="col-sm-8">
             <h2 class="section-title">Campuses</h2>
           <div class="scrollable-list">
-            <CampusList />
+            <CampusList ref="campusList" />
           </div>
         </div>
         <!-- Formulario de reporte -->
