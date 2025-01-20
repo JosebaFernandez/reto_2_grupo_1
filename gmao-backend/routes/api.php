@@ -29,3 +29,4 @@ Route::get('/interventions/{idIncidencia}', [InterventionController::class, 'get
 Route::get('/sections', [SectionController::class, 'index']);
 
 Route::post('/incidences/store', [IncidenceController::class, 'store']);
+Route::post('/machines/store', [MachinesController::class, 'store']);
