@@ -26,6 +26,39 @@ class IncidenceController
         return response()->json($incidencia);
     }
 
-    public function store() 
-    {}
+    public function store(Request $request)
+    {
+        // Validar los datos recibidos
+        $validatedData = $request->validate([
+            'idMaquina' => 'required|exists:machines,idMaquina',
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'estadoMaquina' => 'required|string|max:255',
+            'idAveria' => 'required|exists:breakdowns,idAveria',
+        ]);
+
+        $validatedData['fechaReporte'] = now();
+        $validatedData['fechaResolucion'] = null;
+        $validatedData['estadoIncidencia'] = 'Abierta';
+        $validatedData['habilitada'] = true;
+
+        switch ($validatedData['estadoMaquina']) {
+            case 'Máquina parada':
+                $validatedData['gravedad'] = 1;
+                break;
+            case 'Máquina en marcha':
+                $validatedData['gravedad'] = 2;
+                break;
+            case 'Aviso':
+                $validatedData['gravedad'] = 3;
+                break;
+            default:
+                $validatedData['gravedad'] = 0;
+                break;
+        }
+
+        $incidencia = Incidence::create($validatedData);
+
+        return response()->json($incidencia, 201);
+    }
 }
