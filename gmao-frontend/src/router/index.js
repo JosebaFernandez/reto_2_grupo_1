@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import IncidenciaView from "@/views/IncidenciaView.vue";
 import MaquinasView from "@/views/MaquinasView.vue";
 import UsuariosView from "@/views/UsuariosView.vue";
+import OtrosView from "@/views/OtrosView.vue";
 
 const routes = [
   {
@@ -26,6 +27,12 @@ const routes = [
     path: "/usuarios",
     name: "UsuariosView",
     component: UsuariosView,
+    props: true,
+  },
+  {
+    path: "/otros",
+    name: "OtrosView",
+    component: OtrosView,
     props: true,
   },
   // Puedes añadir más rutas aquí en el futuro
