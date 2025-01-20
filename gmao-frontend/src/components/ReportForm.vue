@@ -157,7 +157,6 @@ export default {
         this.selectedSeverity = "";
         this.selectedAveria = "";
 
-        alert("Incidencia registrada correctamente");
       } catch (error) {
         console.error("Error al registrar la incidencia:", error);
         alert("Hubo un error al registrar la incidencia. Por favor, inténtelo de nuevo.");

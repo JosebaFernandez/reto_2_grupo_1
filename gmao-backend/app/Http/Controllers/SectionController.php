@@ -24,6 +24,6 @@ class SectionController
             'nombre' => $request->nombre,
         ]);
 
-        return response()->json($seccion);
+        return response()->json($seccion); 
     }
 }
