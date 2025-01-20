@@ -18,18 +18,15 @@ class TaskController
         $validatedData = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
-            'idTarea' => 'required|integer',
         ]);
         if($validatedData->fails()){
             return response()->json($validatedData->messages(), 400);
-
         }
 
 
         $task = Task::create([
                 'nombre' => $request->get('nombre'),
                 'descripcion' => $request->get('descripcion'),
-                'idTarea' => $request->get('idTarea'),
             ]
 
         );
