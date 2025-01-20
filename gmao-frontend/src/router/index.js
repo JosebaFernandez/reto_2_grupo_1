@@ -4,6 +4,7 @@ import IncidenciaView from "@/views/IncidenciaView.vue";
 import MaquinasView from "@/views/MaquinasView.vue";
 import UsuariosView from "@/views/UsuariosView.vue";
 import OtrosView from "@/views/OtrosView.vue";
+import TareasView from "@/views/TareasView.vue";
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     path: "/usuarios",
     name: "UsuariosView",
     component: UsuariosView,
+    props: true,
+  },
+  {
+    path: "/tareas",
+    name: "TareasView",
+    component: TareasView,
     props: true,
   },
   {

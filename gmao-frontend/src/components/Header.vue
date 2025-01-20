@@ -10,6 +10,9 @@
     <div class="menu"><router-link :to="{ name: 'UsuariosView' }">
       Usuarios
     </router-link></div>
+    <div class="menu"><router-link :to="{ name: 'TareasView' }">
+      Mantenimientos
+    </router-link></div>
     <div class="menu"><router-link :to="{ name: 'OtrosView' }">
       Otros
     </router-link></div>

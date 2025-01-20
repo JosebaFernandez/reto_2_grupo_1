@@ -8,8 +8,9 @@ use App\Http\Controllers\IncidenceController;
 use App\Http\Controllers\MachinesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InterventionController;
+use App\Http\Controllers\TaskController;
 
-use App\Http\Controllers\BreakdownController; 
+use App\Http\Controllers\BreakdownController;
 use App\Http\Controllers\SectionController;
 
 
@@ -34,6 +35,12 @@ Route::post('/machines/store', [MachinesController::class, 'store']);
 
 Route::post('/breakdowns/store', [BreakdownController::class, 'store']);
 Route::post('/sections/store', [SectionController::class, 'store']);
+
+Route::get('/tasks', [TaskController::class, 'index']);
+Route::post('/tasks/store', [TaskController::class, 'store']);
+
 Route::post('/campuses/store', [CampusController::class, 'store']);
 
+
 Route::post('/users/store', [UserController::class, 'store']);
+

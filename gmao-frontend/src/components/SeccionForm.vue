@@ -3,8 +3,8 @@
         <h2 class="section-title">Nueva Sección</h2>
         <form class="register-form" @submit.prevent="submitSeccion">
             <div class="mb-3">
-                <label for="machineCampus" class="form-label">Selecciona el campus:</label>
-                <select id="machineCampus" class="form-select" v-model="selectedCampus" required>
+                <label for="seccionCampus" class="form-label">Selecciona el campus:</label>
+                <select id="seccionxCampus" class="form-select" v-model="selectedCampus" required>
                     <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">
                         {{ campus.nombre }}
                     </option>
