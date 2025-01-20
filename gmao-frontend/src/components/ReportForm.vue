@@ -3,9 +3,25 @@
     <h2 class="section-title">Reportar</h2>
     <form class="report-form" @submit.prevent="submitReport">
       <div class="mb-3">
+        <label for="machineCampus" class="form-label">Selecciona el campus:</label>
+        <select id="machineCampus" class="form-select" v-model="selectedCampus">
+          <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">
+            {{ campus.nombre }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="machineSection" class="form-label">Selecciona la seccion:</label>
+        <select id="machineSection" class="form-select" v-model="selectedSeccion" :disabled="!filteredSecciones.length">
+          <option v-for="seccion in filteredSecciones" :key="seccion.idSeccion" :value="seccion.idSeccion">
+            {{ seccion.nombre }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="machine" class="form-label">Selecciona la máquina:</label>
-        <select id="maquina" class="form-select" v-model="selectedMaquina">
-          <option v-for="maquina in maquinas" :key="maquina.idMaquina" :value="maquina.idMaquina">
+        <select id="machine" class="form-select" v-model="selectedMaquina" :disabled="!filteredMaquinas.length">
+          <option v-for="maquina in filteredMaquinas" :key="maquina.idMaquina" :value="maquina.idMaquina">
             {{ maquina.nombre }}
           </option>
         </select>
@@ -35,7 +51,7 @@
         <label for="description" class="form-label">Describe la incidencia:</label>
         <textarea id="description" class="form-control" rows="5" v-model="description" required></textarea>
       </div>
-      <button type="submit" class="btn btn-reportar w-100">Reportar</button>
+      <input type="submit" class="btn btn-reportar w-100">
     </form>
   </div>
 </template>
@@ -54,24 +70,46 @@ export default {
       selectedSeverity: "",
       description: "",
       title: "",
+      campuses: [],
+      secciones: [],
+      selectedCampus: "",
+      selectedSeccion: "",
     };
   },
+  computed: {
+    filteredSecciones() {
+      if (!this.selectedCampus) return [];
+      return this.secciones.filter(seccion =>
+        seccion.idSeccion.toString().startsWith(this.selectedCampus.toString())
+      );
+    },
+    filteredMaquinas() {
+      if (this.filteredSecciones === 0) return [];
+      if (!this.selectedSeccion) return [];
+      return this.maquinas.filter(
+        (maquina) => maquina.idSeccion === this.selectedSeccion
+      );
+    },
+  },
+
   created() {
     this.fetchMaquinas();
     this.fetchAverias();
+    this.fetchCampuses();
+    this.fetchSecciones();
   },
   methods: {
     async fetchMaquinas() {
       try {
         const response = await axios.get(
           "http://127.0.0.1:8000/api/machines"
-        ); 
-        this.maquinas = response.data; 
+        );
+        this.maquinas = response.data;
       } catch (error) {
         console.error("Error al obtener las máquinas:", error);
       }
     },
-    
+
     async fetchAverias() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/breakdowns");
@@ -80,7 +118,24 @@ export default {
         console.error("Error al obtener las averías:", error);
       }
     },
-
+    async fetchCampuses() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/campuses");
+        console.log("Campuses:", response.data); // Verifica los datos
+        this.campuses = response.data;
+      } catch (error) {
+        console.error("Error al obtener los campus:", error);
+      }
+    },
+    async fetchSecciones() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/sections");
+        console.log("Secciones:", response.data); // Verifica los datos
+        this.secciones = response.data;
+      } catch (error) {
+        console.error("Error al obtener las secciones:", error);
+      }
+    },
     async submitReport() {
       try {
         const reportData = {
@@ -104,7 +159,8 @@ export default {
 
         alert("Incidencia registrada correctamente");
       } catch (error) {
-        console.error("Error al enviar la incidencia:", error);
+        console.error("Error al registrar la incidencia:", error);
+        alert("Hubo un error al registrar la incidencia. Por favor, inténtelo de nuevo.");
       }
     },
   },

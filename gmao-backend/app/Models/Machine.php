@@ -10,10 +10,10 @@ class Machine extends Model
     use HasFactory;
 
     protected $table = 'machines';
-    protected $primaryKey = 'idMaquina';
     public $timestamps = true;
 
     protected $fillable = [
+        'idMaquina',
         'nombre',
         'idCampus',
         'idSeccion',
