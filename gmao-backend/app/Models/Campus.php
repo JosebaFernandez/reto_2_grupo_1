@@ -13,6 +13,12 @@ class Campus extends Model
     protected $primaryKey = 'idCampus';
     public $timestamps = true;
 
+    protected $fillable = [
+        'nombre',
+    ];
+
+    
+
     public function machines()
     {
         return $this->hasMany(Machine::class, 'idCampus', 'idCampus');
