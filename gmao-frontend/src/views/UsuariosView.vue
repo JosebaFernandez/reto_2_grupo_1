@@ -20,7 +20,7 @@ import UsuarioForm from "@/components/UsuarioForm.vue";
 import UsuarioList from "@/components/UsuarioList.vue";
 
 export default {
-    name: "Maquinas",
+    name: "Usuarios",
     components: {
         UsuarioList,
         UsuarioForm,
