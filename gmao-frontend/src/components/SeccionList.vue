@@ -35,6 +35,9 @@
           console.error("Error al obtener las secciones:", error);
         }
       },
+      updateList(newSeccion) {
+        this.secciones.push(newSeccion);
+      }
     },
   };
   </script>

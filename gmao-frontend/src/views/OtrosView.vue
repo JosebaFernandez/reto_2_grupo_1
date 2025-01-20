@@ -5,13 +5,12 @@
         <div class="col-sm-8">
             <h2 class="section-title">Tipos de Avería</h2>
           <div class="scrollable-list">
-            <AveriaList />
+            <AveriaList ref="averiaList" />
           </div>
         </div>
         <!-- Formulario de reporte -->
         <div class="col-sm-4">
-
-          <AveriaForm />
+          <AveriaForm @averia-added="handleNewAveria" />
         </div>
       </div>
       <div class="row">
@@ -19,12 +18,12 @@
         <div class="col-sm-8">
             <h2 class="section-title">Secciones</h2>
           <div class="scrollable-list">
-            <SeccionList />
+            <SeccionList ref="seccionList" />
           </div>
         </div>
         <!-- Formulario de reporte -->
         <div class="col-sm-4">
-          <SeccionForm />
+          <SeccionForm @seccion-added="handleNewSeccion" />
         </div>
       </div>
       <div class="row">
@@ -61,6 +60,15 @@
       CampusList,
       CampusForm,
     },
+    methods: {
+      handleNewAveria(newAveria) {
+        // Llamar al método updateList del componente hijo AveriaList
+        this.$refs.averiaList.updateList(newAveria);
+      },
+      handleNewSeccion(newSeccion) {
+        this.$refs.seccionList.updateList(newSeccion);
+      }
+    }
   };
   </script>
   

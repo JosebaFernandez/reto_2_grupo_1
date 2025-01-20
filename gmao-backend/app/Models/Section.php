@@ -13,5 +13,24 @@ class Section extends Model
     protected $primaryKey = 'idSeccion';
     public $timestamps = true;
 
-    protected $fillable = ['nombre'];
+    protected $fillable = [
+        'idSeccion',
+        'nombre',
+    
+    ];
+
+    public static function generarIdSeccion($campus)
+    {
+        $ultimaSeccion = self::where('idSeccion', 'like', "$campus%")
+            ->orderBy('idSeccion', 'desc')
+            ->first();
+
+        $ultimoNumero = $ultimaSeccion
+            ? (int)substr($ultimaSeccion->idSeccion, 1)
+            : 0;
+
+        $nuevoNumero = str_pad($ultimoNumero + 1, 3, '0', STR_PAD_LEFT);
+
+        return $campus . $nuevoNumero;
+    }
 }

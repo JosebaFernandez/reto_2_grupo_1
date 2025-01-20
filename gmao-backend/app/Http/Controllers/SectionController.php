@@ -13,4 +13,17 @@ class SectionController
         return response()->json($sections);
         
     }
+
+    public function store(Request $request)
+    {
+
+        $idSeccion = Section::generarIdSeccion($request->idCampus);
+
+        $seccion = Section::create([
+            'idSeccion' => $idSeccion,
+            'nombre' => $request->nombre,
+        ]);
+
+        return response()->json($seccion);
+    }
 }
