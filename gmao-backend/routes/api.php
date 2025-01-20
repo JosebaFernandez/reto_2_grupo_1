@@ -34,3 +34,4 @@ Route::post('/machines/store', [MachinesController::class, 'store']);
 
 Route::post('/breakdowns/store', [BreakdownController::class, 'store']);
 Route::post('/sections/store', [SectionController::class, 'store']);
+Route::post('/campuses/store', [CampusController::class, 'store']);

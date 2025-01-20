@@ -36,7 +36,7 @@
         </div>
         <!-- Formulario de reporte -->
         <div class="col-sm-4">
-          <CampusForm />
+          <CampusForm @campus-added="handleNewCampus" />
         </div>
       </div>
     </div>
@@ -67,6 +67,9 @@
       },
       handleNewSeccion(newSeccion) {
         this.$refs.seccionList.updateList(newSeccion);
+      },
+      handleNewCampus(newCampus) {
+        this.$refs.campusList.updateList(newCampus);
       }
     }
   };

@@ -35,6 +35,9 @@
           console.error("Error al obtener los campuses:", error);
         }
       },
+      updateList(newCampus) {
+        this.campuses.push(newCampus);
+      }
     },
   };
   </script>
