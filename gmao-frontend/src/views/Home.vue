@@ -2,12 +2,12 @@
   <div class="container main-container">
     <div class="row">
       <!-- Lista de incidencias (columna de 8 unidades) -->
-      <div class="col-sm-8">
+      <div class="col-sm-8 ">
         <IncidentList />
       </div>
 
       <!-- Formulario de reporte (columna de 4 unidades) -->
-      <div class="col-sm-4 fixed-right">
+      <div class="col-sm-4 scrollable">
         <ReportForm />
       </div>
     </div>
@@ -29,11 +29,17 @@ export default {
 
 <style scoped>
 .main-container {
-  padding-top: 80px; /* Espacio para la cabecera fija */
+  padding-top: 80px;
+  /* Espacio para la cabecera fija */
 }
 
-.fixed-right {
+.scrollable {
   position: fixed;
-  right: 20px;
+  max-height: 80vh;
+  /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+  /* Habilita el scroll vertical */
+  /* Opcional: añade un poco de espacio interior */
+  right: 5px;
 }
 </style>
