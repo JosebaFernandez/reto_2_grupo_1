@@ -16,12 +16,14 @@ class Incidence extends Model
     protected $fillable = [
         'idMaquina',
         'fechaReporte',
+        'titulo',
         'descripcion',
         'fechaResolucion',
         'estadoIncidencia',
-        'prioridad',
         'estadoMaquina',
-        'habilitado'
+        'habilitada',
+        'gravedad',
+        'idAveria'
     ];
 
     public function machine()

@@ -13,7 +13,6 @@
             <div class="mb-3">
                 <label for="machineCampus" class="form-label">Selecciona el campus:</label>
                 <select id="machineCampus" class="form-select" v-model="form.idCampus" required>
-            
                     <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">
                         {{ campus.nombre }}
                     </option>
@@ -60,6 +59,14 @@ export default {
       secciones: [],
     };
   },
+  computed: {
+    filteredSecciones() {
+  if (!this.selectedCampus) return [];
+  return this.secciones.filter(seccion => 
+    seccion.idSeccion.toString().startsWith(this.selectedCampus.toString())
+  );
+},
+  },
   created() {
     this.fetchCampuses();
     this.fetchSecciones();
@@ -90,9 +97,11 @@ export default {
         alert("Hubo un error al registrar la máquina");
       }
     },
+
   },
 };
 </script>
+
 
 <style scoped>
 .register-form {
