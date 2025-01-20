@@ -1,10 +1,10 @@
 <template>
     <div>
         <h2 class="section-title">Nuevo Tipo de Avería</h2>
-        <form class="register-form">
+        <form class="register-form" @submit.prevent="submitAveria">
             <div class="mb-3">
-                <label for="averiaName" class="form-label">Introduce el nombre:</label>
-                <input type="text" id="averiaName" class="form-control"></input>
+                <label for="nombre" class="form-label">Introduce el nombre:</label>
+                <input type="text" id="nombre" class="form-control" v-model="nombre" required>
             </div>
             
             <button type="submit" class="btn btn-registrar w-100">Registrar</button>
@@ -13,9 +13,33 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: "AveriaForm",
+    data() {
+        return {
+            nombre: "",
+        };
+    },
+    methods: {
+        async submitAveria() {
+            try {
+                const response = await axios.post("http://127.0.0.1:8000/api/breakdowns/store", {
+                    nombre: this.nombre,
+                });
+                
+                this.$emit('averia-added', response.data);
+                
+                this.nombre = "";
+            } catch (error) {
+                console.error("Error al enviar la avería:", error);
+                alert("Error al registrar la avería");
+            }
+        }
+    }
 };
+
+
 </script>
 
 <style scoped>

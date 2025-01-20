@@ -33,6 +33,10 @@ export default {
                 console.error("Error al obtener las averías:", error);
             }
         },
+        // Nuevo método para actualizar la lista
+        updateList(newAveria) {
+            this.averias.push(newAveria);
+        }
     },
 };
 </script>

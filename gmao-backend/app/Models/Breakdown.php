@@ -13,4 +13,7 @@ class Breakdown extends Model
     protected $primaryKey = 'idAveria'; 
     public $timestamps = true;
 
+    protected $fillable = [
+        'nombre',
+    ];
 }

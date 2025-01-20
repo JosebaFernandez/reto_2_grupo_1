@@ -35,7 +35,7 @@ class IncidenceController
             'descripcion' => 'required|string',
             'estadoMaquina' => 'required|string|max:255',
             'idAveria' => 'required|exists:breakdowns,idAveria',
-        ]);
+        ]); 
 
         $validatedData['fechaReporte'] = now();
         $validatedData['fechaResolucion'] = null;
