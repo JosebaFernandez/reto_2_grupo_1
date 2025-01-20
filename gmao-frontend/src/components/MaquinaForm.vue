@@ -20,7 +20,7 @@
             </div>
             <div class="mb-3">
                 <label for="machineSection" class="form-label">Selecciona la seccion:</label>
-                <select id="machineSection" class="form-select" v-model="form.idSeccion" required>
+                <select id="machineSection" class="form-select" v-model="form.idSeccion"   :disabled="!filteredSecciones.length" required>
 
                     <option v-for="seccion in secciones" :key="seccion.idSeccion" :value="seccion.idSeccion">
                         {{ seccion.nombre }}
@@ -61,9 +61,9 @@ export default {
   },
   computed: {
     filteredSecciones() {
-  if (!this.selectedCampus) return [];
+  if (!this.form.idCampus) return [];
   return this.secciones.filter(seccion => 
-    seccion.idSeccion.toString().startsWith(this.selectedCampus.toString())
+    seccion.idSeccion.toString().startsWith(this.form.idCampus.toString())
   );
 },
   },
