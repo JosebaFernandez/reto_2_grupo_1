@@ -41,3 +41,6 @@ Route::post('/tasks/store', [TaskController::class, 'store']);
 
 Route::post('/campuses/store', [CampusController::class, 'store']);
 
+
+Route::post('/users/store', [UserController::class, 'store']);
+
