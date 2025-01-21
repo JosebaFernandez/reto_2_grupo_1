@@ -3,12 +3,12 @@
         <div class="row">
             <!-- Lista de incidencias (columna de 8 unidades) -->
             <div class="col-sm-8">
-                <UsuarioList />
+                <UsuarioList ref="userList" />
             </div>
 
             <!-- Formulario de reporte (columna de 4 unidades) -->
             <div class="col-sm-4 fixed-right">
-                <UsuarioForm />
+                <UsuarioForm @user-added="handleNewUser" />
             </div>
         </div>
     </div>
@@ -25,7 +25,13 @@ export default {
         UsuarioList,
         UsuarioForm,
     },
+    methods: {
+        handleNewUser(newUser) {
+            this.$refs.userList.updateList(newUser);
+        }
+    }
 };
+
 </script>
 
 <style scoped>

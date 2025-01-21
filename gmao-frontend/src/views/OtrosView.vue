@@ -62,7 +62,6 @@
     },
     methods: {
       handleNewAveria(newAveria) {
-        // Llamar al método updateList del componente hijo AveriaList
         this.$refs.averiaList.updateList(newAveria);
       },
       handleNewSeccion(newSeccion) {

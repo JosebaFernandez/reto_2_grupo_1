@@ -12,7 +12,7 @@ class SectionController
         $sections = Section::all();
         return response()->json($sections);
         
-    }
+    } 
 
     public function store(Request $request)
     {
