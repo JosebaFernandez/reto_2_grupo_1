@@ -43,12 +43,10 @@ export default {
         async submitTarea() {
             try {
                 const response = await axios.post("http://127.0.0.1:8000/api/tasks/store", this.form);
-
-                // Vaciar formulario después del envío exitoso
+                this.$emit('task-added', response.data);
                 this.form.nombre = "";
                 this.form.descripcion = "";
 
-                alert("Tarea registrada exitosamente");
             } catch (error) {
                 console.error("Error al enviar la tarea:", error.response);
                 alert("Error al registrar la tarea");
