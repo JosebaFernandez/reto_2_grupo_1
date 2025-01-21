@@ -3,24 +3,28 @@
     <h2 class="section-title">Tareas de Mantenimiento</h2>
     <div v-for="tarea in tareas" :key="tarea.idTarea" class="card">
       <div class="card-body">
-        <h5 class="card-title">
-          {{ tarea.nombre }}
-        </h5>
+        <h5 class="card-title">{{ tarea.nombre }}</h5>
         <p class="card-text">{{ tarea.descripcion }}</p>
-        <button type="submit" class="btn btn-registrar w-400">Asignar a una maquina</button>
+        <button @click="openModal(tarea)" class="btn btn-registrar">Asignar a una máquina</button>
       </div>
     </div>
+    <!-- Modal para asignar tarea -->
+    <AssignTask v-if="selectedTask" :visible="showModal" :task="selectedTask" @close="showModal = false" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import AssignTask from "./AssignTask.vue";
 
 export default {
   name: "TareaList",
+  components: { AssignTask },
   data() {
     return {
-      tareas: [], // Initialize as an empty array
+      tareas: [],
+      showModal: false,
+      selectedTask: null,
     };
   },
   created() {
@@ -29,13 +33,15 @@ export default {
   methods: {
     async fetchTareas() {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/tasks"
-        ); // Adjust the URL according to your API
-        this.tareas = response.data; // Assign the data to this.tareas
+        const response = await axios.get("http://127.0.0.1:8000/api/tasks");
+        this.tareas = response.data;
       } catch (error) {
         console.error("Error al obtener las tareas:", error);
       }
+    },
+    openModal(tarea) {
+      this.selectedTask = tarea;
+      this.showModal = true;
     },
   },
 };
@@ -58,8 +64,9 @@ export default {
   font-size: 1.25rem;
   font-weight: bold;
 }
+
 .btn-registrar {
-    background-color: #84005d;
-    color: white;
+  background-color: #84005d;
+  color: white;
 }
 </style>

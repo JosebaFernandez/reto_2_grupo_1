@@ -9,6 +9,7 @@ use App\Http\Controllers\MachinesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\MaintenanceController;
 
 use App\Http\Controllers\BreakdownController;
 use App\Http\Controllers\SectionController;
@@ -38,3 +39,9 @@ Route::post('/sections/store', [SectionController::class, 'store']);
 
 Route::get('/tasks', [TaskController::class, 'index']);
 Route::post('/tasks/store', [TaskController::class, 'store']);
+
+
+
+Route::post('/assign-task', [MaintenanceController::class, 'assignTask']);
+
+

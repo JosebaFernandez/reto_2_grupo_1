@@ -1,11 +1,9 @@
 <template>
     <div class="container main-container">
         <div class="row">
-            <!-- Lista de incidencias (columna de 8 unidades) -->
             <div class="col-sm-8">
                 <TareaList />
             </div>
-            <!-- Formulario de reporte (columna de 4 unidades) -->
             <div class="col-sm-4 fixed-right">
                 <TareaForm />
             </div>
@@ -15,7 +13,6 @@
 
 
 <script>
-
 import TareaForm from "@/components/TareaForm.vue";
 import TareaList from "@/components/TareaList.vue";
 
@@ -37,5 +34,30 @@ export default {
 .fixed-right {
     position: fixed;
     right: 20px;
+}
+
+.open-modal-button {
+    background-color: #84005d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.open-modal-button:hover {
+    background-color: #620044;
+}
+
+.btn-cerrar {
+    background-color: #ccc;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cerrar:hover {
+    background-color: #aaa;
 }
 </style>
