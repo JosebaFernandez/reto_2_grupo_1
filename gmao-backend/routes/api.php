@@ -40,8 +40,12 @@ Route::post('/sections/store', [SectionController::class, 'store']);
 Route::get('/tasks', [TaskController::class, 'index']);
 Route::post('/tasks/store', [TaskController::class, 'store']);
 
-
-
 Route::post('/assign-task', [MaintenanceController::class, 'assignTask']);
+
+
+Route::post('/campuses/store', [CampusController::class, 'store']);
+
+
+Route::post('/users/store', [UserController::class, 'store']);
 
 

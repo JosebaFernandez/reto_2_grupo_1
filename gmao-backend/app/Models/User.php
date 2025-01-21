@@ -25,4 +25,13 @@ class User extends Model
     protected $hidden = [
         'password'
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            if (is_null($user->habilitado)) {
+                $user->habilitado = 1; // Establecer a 1 si no se especifica
+            }
+        });
+    }
 }

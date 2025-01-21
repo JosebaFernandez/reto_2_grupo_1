@@ -59,7 +59,7 @@ export default {
         this.nombre = "";
         this.selectedCampus = "";
       } catch (error) {
-        console.error("Error al enviar la sección:", error);
+        console.error("Errores al enviar la sección:", error);
       }
 
       
