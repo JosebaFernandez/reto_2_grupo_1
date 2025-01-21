@@ -12,7 +12,18 @@
             </div>
             <div class="mb-3">
                 <label for="userEmail" class="form-label">Introduce el email:</label>
-                <input type="email" id="userEmail" class="form-control" v-model="form.email" required />
+                <input
+                type="email"
+                id="userEmail"
+                class="form-control"
+                v-model="form.email"
+                required
+                :class="{ 'is-invalid': emailError }"
+                />
+                <!-- Mostrar mensaje de error debajo del campo -->
+                <div v-if="emailError" class="text-danger">
+                {{ emailError }}
+                </div>
             </div>
             <div class="mb-3">
                 <label for="userPassword" class="form-label">Introduce la contraseña:</label>
@@ -50,6 +61,7 @@ export default {
                 rol: "",
             },
             passwordError: false, // Para manejar el error de la contraseña
+            emailError: "", // Para manejar el error de email
         };
     },
     methods: {
@@ -75,8 +87,17 @@ export default {
                 alert("Usuario registrado exitosamente");
                 this.resetForm(); // Reseteamos el formulario
             } catch (error) {
-                console.error("Error al registrar el usuario:", error.response.data);
-                alert("Hubo un error al registrar el usuario");
+                // Verifica si el error está relacionado con el email duplicado
+                if (error.response && error.response.data) {
+                const serverError = error.response.data;
+                if (serverError.email) {
+                    this.emailError = serverError.email[0]; // Mostrar el mensaje del servidor
+                } else {
+                    console.error("Error al registrar el usuario:", serverError);
+                }
+                } else {
+                console.error("Error al registrar el usuario:", error.message);
+                }
             }
         },
         resetForm() {
