@@ -17,6 +17,9 @@
             class="btn btn-registrar">
             Cambiar rol
           </button>
+          <button @click="toggleUserStatus(usuario)" class="btn disable-btn">
+            Deshabilitar
+          </button>
         </div>
       </div>
 
@@ -123,6 +126,10 @@
           console.error("Error al actualizar el rol:", error);
           this.fetchUsuarios();
         }
+      },
+      toggleUserStatus(user) {
+        // Implementa la lógica para deshabilitar el usuario
+        console.log("Deshabilitar usuario:", user);
       }
     },
     mounted() {
@@ -170,8 +177,13 @@
   .btn-registrar {
   background-color: #84005d;
   color: white;
+  margin-right: 10px;
 }
-
+.disable-btn {
+  background-color: #dc3545;
+  color: white;
+  margin-right: 10px;
+}
 /* Estilos adicionales para el modal */
 .modal-dialog {
   max-width: 400px;
@@ -196,5 +208,6 @@
 .user-name {
   font-size: 1.1em;
 }
+
   </style>
   

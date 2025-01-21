@@ -31,20 +31,6 @@ class UserController
             return response()->json($validatedData->messages(), 400);
         }
 
-        // Asignar el valor de 'habilitado' dependiendo del rol
-        $habilitado = 0; // Valor por defecto si no se encuentra el rol
-        switch ($request->get('rol')) {
-            case 'administrador':
-                $habilitado = 1;
-                break;
-            case 'tecnico':
-                $habilitado = 2;
-                break;
-            case 'operario':
-                $habilitado = 3;
-                break;
-        }
-
         // Crear un nuevo usuario
         $user = User::create([
             'nombre' => $request->get('nombre'),
@@ -52,7 +38,7 @@ class UserController
             'rol' => $request->get('rol'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')), // Asegúrate de hashear la contraseña
-            'habilitado' => $habilitado, // Asignamos el valor de habilitado
+            'habilitado' => 1, // Asignamos el valor de habilitado
         ]);
 
         // Responder con el usuario creado
@@ -63,6 +49,14 @@ class UserController
     {
         $user = User::find($idUsuario);
         $user->rol = $request->rol;
+        $user->save();
+        return response()->json($user);
+    }
+
+    public function deshabilitar($idUsuario)
+    {
+        $user = User::find($idUsuario);
+        $user->habilitado = 0;
         $user->save();
         return response()->json($user);
     }
