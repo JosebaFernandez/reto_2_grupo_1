@@ -37,6 +37,9 @@
           console.error("Error al obtener los usuarios:", error);
         }
       },
+      updateList(newUser) {
+        this.users.push(newUser);
+      }
     },
   };
   </script>

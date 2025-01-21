@@ -9,7 +9,7 @@
           </router-link>
         </h5>
         <p class="card-text text-muted">
-          <small>{{ incidencia.fechaReporte }}</small>
+          <small>{{ formatDate(incidencia.fechaReporte) }}</small>
         </p>
         <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
         <p class="card-text"><b>Gravedad: </b>{{ incidencia.gravedad }}</p>
@@ -26,7 +26,7 @@ export default {
   name: "IncidentList",
   data() {
     return {
-      incidencias: [], // Inicializamos como array vacío
+      incidencias: [],
     };
   },
   created() {
@@ -43,6 +43,20 @@ export default {
         console.error("Error al obtener las incidencias:", error);
       }
     },
+
+    updateList(newReport) {
+      this.incidencias.push(newReport);
+    },
+
+    formatDate(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+    }
   },
 };
 </script>

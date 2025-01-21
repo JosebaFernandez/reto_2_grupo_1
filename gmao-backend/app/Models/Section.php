@@ -14,9 +14,9 @@ class Section extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'idSeccion',
+        'idSeccion', 
         'nombre',
-    
+     
     ];
 
     public static function generarIdSeccion($campus)
