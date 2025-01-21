@@ -30,7 +30,7 @@ class User extends Model
     {
         static::creating(function ($user) {
             if (is_null($user->habilitado)) {
-                $user->habilitado = 1; // Establecer a 1 si no se especifica
+                $user->habilitado = 1;
             }
         });
     }
