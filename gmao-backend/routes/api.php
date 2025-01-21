@@ -49,3 +49,4 @@ Route::post('/campuses/store', [CampusController::class, 'store']);
 Route::post('/users/store', [UserController::class, 'store']);
 
 
+Route::post('/users/cambiarRol/{idUsuario}', [UserController::class, 'cambiarRol']);

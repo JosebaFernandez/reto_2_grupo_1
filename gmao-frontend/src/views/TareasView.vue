@@ -2,10 +2,10 @@
     <div class="container main-container">
         <div class="row">
             <div class="col-sm-8">
-                <TareaList />
+                <TareaList ref="taskList" />
             </div>
             <div class="col-sm-4 fixed-right">
-                <TareaForm />
+                <TareaForm @task-added="handleNewTask" />
             </div>
         </div>
     </div>
@@ -22,6 +22,11 @@ export default {
         TareaList,
         TareaForm,
     },
+    methods: {
+        handleNewTask(newTask) {
+            this.$refs.taskList.updateList(newTask);
+        }
+    }
 };
 </script>
 

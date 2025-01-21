@@ -8,7 +8,7 @@
         <button @click="openModal(tarea)" class="btn btn-registrar">Asignar a una máquina</button>
       </div>
     </div>
-    <!-- Modal para asignar tarea -->
+
     <AssignTask v-if="selectedTask" :visible="showModal" :task="selectedTask" @close="showModal = false" />
   </div>
 </template>
@@ -43,7 +43,10 @@ export default {
       this.selectedTask = tarea;
       this.showModal = true;
     },
-  },
+    updateList(newTask) {
+      this.tareas.push(newTask);
+    }
+  },  
 };
 </script>
 

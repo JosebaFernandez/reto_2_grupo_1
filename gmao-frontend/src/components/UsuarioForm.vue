@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="section-title">Registrar Usuario</h2>
-        <div class="card">
+        <form @submit.prevent="registerUser" class="card">
             <div class="mb-3">
                 <label for="userName" class="form-label">Introduce el nombre:</label>
                 <input type="text" id="userName" class="form-control" v-model="nombre" required />
@@ -12,15 +12,18 @@
             </div>
             <div class="mb-3">
                 <label for="userEmail" class="form-label">Introduce el email:</label>
-                <input type="email" id="userEmail" class="form-control" v-model="email" required />
+                <input type="text" id="userEmail" class="form-control" v-model="email" required :class="{'is-invalid': emailError}" />
             </div>
+            <p v-if="emailError" class="text-danger">
+                {{ emailErrorMessage }}
+            </p>
             <div class="mb-3">
                 <label for="userPassword" class="form-label">Introduce la contraseña:</label>
                 <input type="password" id="userPassword" class="form-control" v-model="password" required :class="{'is-invalid': passwordError}" />           
             </div>
-            <div v-if="passwordError" class="text-danger">
+            <p v-if="passwordError" class="text-danger">
                 La contraseña debe tener al menos 8 caracteres.
-            </div>
+            </p>
             <div class="mb-3">
                 <label for="userRol" class="form-label">Selecciona el rol:</label>
                 <select id="userRol" class="form-select" v-model="rol" required>
@@ -29,8 +32,8 @@
                     <option value="administrador">Administrador</option>
                 </select>
             </div>
-            <button @click="registerUser" class="btn btn-registrar w-100">Registrar</button>
-        </div>
+            <button type="submit" class="btn btn-registrar w-100">Registrar</button>
+        </form>
     </div>
 </template>
 
@@ -47,6 +50,8 @@ export default {
             password: "",
             rol: "",
             passwordError: false,
+            emailError: false,
+            emailErrorMessage: "",
         };
     },
     methods: {
@@ -76,8 +81,27 @@ export default {
             return true;
         },
 
+        validateEmail() {
+            if (!this.email.includes('@')) {
+                this.emailError = true;
+                this.emailErrorMessage = "La dirección es incorrecta.";
+                return false;
+            }
+            
+            const [, domain] = this.email.split('@');
+            if (!domain || domain.trim() === '') {
+                this.emailError = true;
+                this.emailErrorMessage = "La dirección está incompleta.";
+                return false;
+            }
+
+            this.emailError = false;
+            this.emailErrorMessage = "";
+            return true;
+        },
+
         async registerUser() {
-            if (!this.validatePassword()) {
+            if (!this.validatePassword() || !this.validateEmail()) {
                 return;
             }
             

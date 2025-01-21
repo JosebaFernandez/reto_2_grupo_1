@@ -14,6 +14,7 @@ class UserController
         $users = User::all();
         return response()->json($users);
     }
+
     public function store(Request $request)
     {
         // Validar los datos del request
@@ -56,6 +57,14 @@ class UserController
 
         // Responder con el usuario creado
         return response()->json($user, 201);
+    }
+
+    public function cambiarRol(Request $request, $idUsuario)
+    {
+        $user = User::find($idUsuario);
+        $user->rol = $request->rol;
+        $user->save();
+        return response()->json($user);
     }
     
 }
