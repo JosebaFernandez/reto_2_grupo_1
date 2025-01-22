@@ -83,7 +83,9 @@ export default {
         console.error("Error al obtener los campus:", error);
       }
     },
-
+    updateList(newReport) {
+      this.incidencias.push(newReport);
+    },
     formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
@@ -112,7 +114,6 @@ export default {
 
 .card-title {
   font-size: 1.25rem;
-  font-weight: bold;
 }
 
 .form-select {
