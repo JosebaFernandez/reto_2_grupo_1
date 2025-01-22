@@ -27,7 +27,7 @@
         <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
         <p class="card-text"><b>Gravedad: </b>{{ getGravedad(incidencia.gravedad) }}</p>
         <p class="card-text"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
-        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre || 'No especificada' }}</p>
+        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre }}</p>
       </div>
     </div>
   </div>
