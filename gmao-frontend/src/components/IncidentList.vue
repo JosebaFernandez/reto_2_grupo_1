@@ -1,7 +1,20 @@
 <template>
   <div>
-    <h2 class="section-title">Incidencias</h2>
-    <div v-for="incidencia in incidencias" :key="incidencia.idIncidencia" class="card">
+    <h2 class="section-title">
+      Incidencias
+      <select v-model="selectedCampus" class="form-select" style="margin-left: 10px;">
+        <option value="">Seleccionar campus</option>
+        <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">{{ campus.nombre }}</option>
+      </select>
+    </h2>
+
+    <!-- Mostrar mensaje si no hay incidencias filtradas -->
+    <p v-if="filteredIncidencias.length === 0" class="text-muted">
+      No hay incidencias en este campus.
+    </p>
+
+    <!-- Renderizar incidencias si hay resultados -->
+    <div v-for="incidencia in filteredIncidencias" :key="incidencia.idIncidencia" class="card">
       <div class="card-body">
         <h5 class="card-title">
           <router-link :to="{ name: 'IncidenciaView', params: { id: incidencia.idIncidencia } }">
@@ -27,25 +40,48 @@ export default {
   data() {
     return {
       incidencias: [],
+      selectedCampus: "",
+      campuses: [] // Asegúrate de que esta lista de campuses se obtenga de tu API o sea estática.
     };
   },
   created() {
     this.fetchIncidences();
+    this.fetchCampuses(); // Cargar los campus disponibles
+  },
+  computed: {
+    filteredIncidencias() {
+      if (!this.selectedCampus) return this.incidencias;
+      // Filtrar incidencias en función del primer número del ID de la máquina
+      return this.incidencias.filter(incidencia => {
+        const campusId = this.selectedCampus.toString();
+        const machineId = incidencia.machine.idMaquina.toString();
+        return machineId.startsWith(campusId); // Compara el inicio del ID de la máquina con el campus seleccionado
+      });
+    }
+  },
+  watch: {
+    selectedCampus(newValue) {
+      // Al cambiar el campus seleccionado, forzar la actualización de la lista de incidencias filtradas
+      console.log("Campus seleccionado:", newValue);
+    }
   },
   methods: {
     async fetchIncidences() {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/incidences"
-        ); // Ajusta la URL según tu API
+        const response = await axios.get("http://127.0.0.1:8000/api/incidences"); // Ajusta la URL según tu API
         this.incidencias = response.data;
       } catch (error) {
         console.error("Error al obtener las incidencias:", error);
       }
     },
 
-    updateList(newReport) {
-      this.incidencias.push(newReport);
+    async fetchCampuses() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/campuses"); // Ajusta la URL según tu API de campuses
+        this.campuses = response.data;
+      } catch (error) {
+        console.error("Error al obtener los campus:", error);
+      }
     },
 
     formatDate(dateString) {
@@ -57,7 +93,7 @@ export default {
         year: 'numeric'
       });
     }
-  },
+  }
 };
 </script>
 
@@ -79,5 +115,8 @@ export default {
   font-weight: bold;
 }
 
-
+.form-select {
+  display: inline-block;
+  width: auto;
+}
 </style>
