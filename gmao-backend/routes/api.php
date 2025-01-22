@@ -50,3 +50,4 @@ Route::post('/users/store', [UserController::class, 'store']);
 
 
 Route::post('/users/cambiarRol/{idUsuario}', [UserController::class, 'cambiarRol']);
+Route::post('/users/deshabilitar/{idUsuario}', [UserController::class, 'deshabilitar']);
