@@ -12,6 +12,10 @@ class IncidenceController
     {
         $incidencias = Incidence::with(['machine', 'breakdown'])
             ->where('estadoIncidencia', '!=', 'Resuelta')
+            ->orderBy('gravedad', 'asc')
+            ->join('machines', 'incidences.idMaquina', '=', 'machines.idMaquina')
+            ->orderBy('machines.prioridad', 'asc')
+            ->orderBy('incidences.fechaReporte', 'asc')
             ->get();
         
         return response()->json($incidencias);

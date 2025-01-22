@@ -26,8 +26,8 @@ export default {
         UsuarioForm,
     },
     methods: {
-        handleNewUser(newUser) {
-            this.$refs.userList.updateList(newUser);
+        handleNewUser(nuevoUsuario) {
+            this.$refs.userList.actualizarLista(nuevoUsuario);
         }
     }
 };

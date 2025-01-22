@@ -25,8 +25,9 @@
           <small>{{ formatDate(incidencia.fechaReporte) }}</small>
         </p>
         <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
-        <p class="card-text"><b>Gravedad: </b>{{ incidencia.gravedad }}</p>
+        <p class="card-text"><b>Gravedad: </b>{{ getGravedad(incidencia.gravedad) }}</p>
         <p class="card-text"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
+        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre || 'No especificada' }}</p>
       </div>
     </div>
   </div>
@@ -40,50 +41,57 @@ export default {
   data() {
     return {
       incidencias: [],
+      averias: [],
       selectedCampus: "",
-      campuses: [] // Asegúrate de que esta lista de campuses se obtenga de tu API o sea estática.
+      campuses: [],
+      gravedades: {
+        1: 'Maquina parada',
+        2: 'Maquina funcionando',
+        3: 'Aviso',
+        4: 'Mantenimiento'
+      },
     };
   },
   created() {
     this.fetchIncidences();
-    this.fetchCampuses(); // Cargar los campus disponibles
+    this.fetchAverias();
+    this.fetchCampuses();
   },
   computed: {
     filteredIncidencias() {
       if (!this.selectedCampus) return this.incidencias;
-      // Filtrar incidencias en función del primer número del ID de la máquina
       return this.incidencias.filter(incidencia => {
         const campusId = this.selectedCampus.toString();
         const machineId = incidencia.machine.idMaquina.toString();
-        return machineId.startsWith(campusId); // Compara el inicio del ID de la máquina con el campus seleccionado
+        return machineId.startsWith(campusId);
       });
-    }
-  },
-  watch: {
-    selectedCampus(newValue) {
-      // Al cambiar el campus seleccionado, forzar la actualización de la lista de incidencias filtradas
-      console.log("Campus seleccionado:", newValue);
     }
   },
   methods: {
     async fetchIncidences() {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/incidences"); // Ajusta la URL según tu API
+        const response = await axios.get("http://127.0.0.1:8000/api/incidences");
         this.incidencias = response.data;
       } catch (error) {
         console.error("Error al obtener las incidencias:", error);
       }
     },
-
+    async fetchAverias() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/breakdowns");
+        this.averias = response.data;
+      } catch (error) {
+        console.error("Error al obtener las averías:", error);
+      }
+    },
     async fetchCampuses() {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/campuses"); // Ajusta la URL según tu API de campuses
+        const response = await axios.get("http://127.0.0.1:8000/api/campuses");
         this.campuses = response.data;
       } catch (error) {
         console.error("Error al obtener los campus:", error);
       }
     },
-
     formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
@@ -92,6 +100,9 @@ export default {
         month: '2-digit',
         year: 'numeric'
       });
+    },
+    getGravedad(gravedadId) {
+      return this.gravedades[gravedadId] || 'Desconocido';
     }
   }
 };
