@@ -18,7 +18,7 @@ export default {
     name: "AveriaList",
     data() {
         return {
-            averias: [], // Inicializamos como array vacío
+            averias: [],
         };
     },
     created() {
@@ -27,13 +27,12 @@ export default {
     methods: {
         async fetchAverias() {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/breakdowns"); // Ajusta la URL según tu API
-                this.averias = response.data; // Guardamos los datos de los tipos de avería
+                const response = await axios.get("http://127.0.0.1:8000/api/breakdowns"); 
+                this.averias = response.data;
             } catch (error) {
                 console.error("Error al obtener las averías:", error);
             }
         },
-        // Nuevo método para actualizar la lista
         updateList(newAveria) {
             this.averias.push(newAveria);
         }
@@ -56,6 +55,5 @@ export default {
 
 .card-title {
     font-size: 1.25rem;
-    font-weight: bold;
 }
 </style>

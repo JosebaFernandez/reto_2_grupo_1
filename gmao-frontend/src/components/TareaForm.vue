@@ -1,14 +1,25 @@
 <template>
     <div>
         <h2 class="section-title">Registrar Tarea</h2>
-        <form class="register-form" @submit.prevent="submitSeccion">
+        <form class="register-form" @submit.prevent="submitTarea">
             <div class="mb-3">
                 <label for="taskName" class="form-label">Introduce el nombre:</label>
-                <input type="text" id="taskName" class="form-control" v-model="nombre" required></input>
+                <input 
+                    type="text" 
+                    id="taskName" 
+                    class="form-control" 
+                    v-model="form.nombre" 
+                    required 
+                />
             </div>
             <div class="mb-3">
-                <label for="taskDescription" class="form-label">Introduce la descripción:</label >
-                <input type="textarea" id="taskDescription" class="form-control" v-model="descripcion" required></input>
+                <label for="taskDescription" class="form-label">Introduce la descripción:</label>
+                <textarea 
+                    id="taskDescription" 
+                    class="form-control" 
+                    v-model="form.descripcion" 
+                    required 
+                ></textarea>
             </div>
             <button type="submit" class="btn btn-registrar w-100">Registrar</button>
         </form>
@@ -16,36 +27,33 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+
 export default {
     name: "TareaForm",
     data() {
         return {
-            nombre: "",
-            descripcion: "",
+            form: {
+                nombre: "",
+                descripcion: "",
+            },
         };
     },
     methods: {
         async submitTarea() {
             try {
-                const response = await axios.post("http://127.0.0.1:8000/api/tasks/store", {
-                    nombre: this.nombre,
-                    descripcion: this.descripcion
-                });
-                
-                this.$emit('tarea-added', response.data);
-                
-                this.nombre = "";
-                this.descripcion = "";
+                const response = await axios.post("http://127.0.0.1:8000/api/tasks/store", this.form);
+                this.$emit('task-added', response.data);
+                this.form.nombre = "";
+                this.form.descripcion = "";
+
             } catch (error) {
-                console.error("Error al enviar la tarea:", error);
+                console.error("Error al enviar la tarea:", error.response);
                 alert("Error al registrar la tarea");
             }
-        }
-    }
+        },
+    },
 };
-
-
 </script>
 
 <style scoped>

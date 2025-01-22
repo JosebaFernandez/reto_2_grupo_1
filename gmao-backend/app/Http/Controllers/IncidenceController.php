@@ -12,6 +12,10 @@ class IncidenceController
     {
         $incidencias = Incidence::with(['machine', 'breakdown'])
             ->where('estadoIncidencia', '!=', 'Resuelta')
+            ->orderBy('gravedad', 'asc')
+            ->join('machines', 'incidences.idMaquina', '=', 'machines.idMaquina')
+            ->orderBy('machines.prioridad', 'asc')
+            ->orderBy('incidences.fechaReporte', 'asc')
             ->get();
         
         return response()->json($incidencias);
@@ -37,7 +41,7 @@ class IncidenceController
             'idAveria' => 'required|exists:breakdowns,idAveria',
         ]); 
 
-        $validatedData['fechaReporte'] = now();
+        $validatedData['fechaReporte'] = now()->format('Y-m-d');
         $validatedData['fechaResolucion'] = null;
         $validatedData['estadoIncidencia'] = 'Abierta';
         $validatedData['habilitada'] = true;
@@ -58,6 +62,8 @@ class IncidenceController
         }
 
         $incidencia = Incidence::create($validatedData);
+
+        $incidencia->load(['machine', 'breakdown']);
 
         return response()->json($incidencia, 201);
     }

@@ -30,7 +30,7 @@
   },
     data() {
       return {
-        maquinas: [], // Inicializamos como array vacío
+        maquinas: [],
       };
     },
     created() {
@@ -41,8 +41,8 @@
         try {
           const response = await axios.get(
             "http://127.0.0.1:8000/api/machines"
-          ); // Ajusta la URL según tu API
-          this.maquinas = response.data; // Asignamos los datos a this.maquinas
+          );
+          this.maquinas = response.data;
         } catch (error) {
           console.error("Error al obtener las maquinas:", error);
         }
@@ -50,6 +50,9 @@
     getCampusName(id) {
       const campus = this.campuses.find((campus) => campus.idCampus === id);
       return campus ? campus.nombre : "Desconocido";
+    },
+    updateList(newMachine) {
+      this.maquinas.push(newMachine);
     },
     },
   };
@@ -70,7 +73,6 @@
   
   .card-title {
     font-size: 1.25rem;
-    font-weight: bold;
   }
   
   </style>
