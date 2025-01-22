@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <Header />
+  <div :class="{'login-page': isLoginPage}">
+    <Header v-if="!isLoginPage" />
     <router-view />
   </div>
 </template>
@@ -13,15 +13,31 @@ export default {
   components: {
     Header,
   },
+  computed: {
+    isLoginPage() {
+      return this.$route.name === "Login"; // Verifica si la ruta es la página de login
+    },
+  },
 };
 </script>
+
 <style>
-/* Puedes mantener estilos globales aquí si es necesario */
+/* Estilos globales por defecto */
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffffff; /* Fondo blanco */
-  color: #000000; /* Texto negro por defecto */
+  background-color: #ffffff;
+  color: #000000;
   margin: 0;
   padding: 0;
+}
+
+/* Estilo específico para la página de login */
+.login-page {
+  height: 100vh;
+  overflow: hidden; /* Evita el scroll */
+}
+
+.login-page body {
+  height: 100%;
 }
 </style>
