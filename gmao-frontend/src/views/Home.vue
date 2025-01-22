@@ -1,14 +1,12 @@
 <template>
   <div class="container main-container">
     <div class="row">
-      <!-- Lista de incidencias (columna de 8 unidades) -->
       <div class="col-sm-8 ">
-        <IncidentList />
+        <IncidentList ref="incidentList" />
       </div>
 
-      <!-- Formulario de reporte (columna de 4 unidades) -->
       <div class="col-sm-4 scrollable">
-        <ReportForm />
+        <ReportForm @report-added="handleNewReport" />
       </div>
     </div>
   </div>
@@ -24,6 +22,12 @@ export default {
     IncidentList,
     ReportForm,
   },
+
+  methods: {
+    handleNewReport(newReport) {
+      this.$refs.incidentList.updateList(newReport);
+    }
+  }
 };
 </script>
 

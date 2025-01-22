@@ -1,13 +1,11 @@
 <template>
     <div class="container main-container">
       <div class="row">
-        <!-- Lista de incidencias (columna de 8 unidades) -->
         <div class="col-sm-8">
-          <MaquinaList :campuses="campuses" />
+          <MaquinaList :campuses="campuses" ref="machineList" />
         </div>
-            <!-- Formulario de reporte (columna de 4 unidades) -->
             <div class="col-sm-4 fixed-right">
-                <MaquinaForm />
+                <MaquinaForm @machine-added="handleNewMachine" />
             </div>
         </div>
       </div>
@@ -28,24 +26,28 @@ export default {
   },
   data() {
     return {
-      campuses: [], // Almacenamos los campuses aquí
+      campuses: [],
     };
   },
   async created() {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/campuses"); // Ajusta la URL según tu API
-      this.campuses = response.data; // Guardamos los campuses obtenidos
+      const response = await axios.get("http://127.0.0.1:8000/api/campuses");
+      this.campuses = response.data;
     } catch (error) {
       console.error("Error al obtener los campuses:", error);
     }
   },
+  methods: {
+    handleNewMachine(newMachine) {
+      this.$refs.machineList.updateList(newMachine);
+    }
+  }
 };
 </script>
 
 <style scoped>
 .main-container {
     padding-top: 80px;
-    /* Espacio para la cabecera fija */
 }
 .fixed-right {
   position: fixed;

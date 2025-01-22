@@ -141,7 +141,7 @@ export default {
         const reportData = {
           idMaquina: this.selectedMaquina,
           titulo: this.title,
-          descripcion: this.description,
+          descripcion: this.description, 
           estadoMaquina: this.selectedSeverity,
           idAveria: this.selectedAveria,
         };
@@ -150,6 +150,8 @@ export default {
           "http://127.0.0.1:8000/api/incidences/store",
           reportData
         );
+
+        this.$emit('report-added', response.data);
 
         this.selectedMaquina = "";
         this.title = "";
