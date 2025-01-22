@@ -12,8 +12,9 @@
           <small>{{ formatDate(incidencia.fechaReporte) }}</small>
         </p>
         <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
-        <p class="card-text"><b>Gravedad: </b>{{ incidencia.gravedad }}</p>
+        <p class="card-text"><b>Gravedad: </b>{{ getGravedad(incidencia.gravedad) }}</p>
         <p class="card-text"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
+        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre || 'No especificada' }}</p>
       </div>
     </div>
   </div>
@@ -27,10 +28,18 @@ export default {
   data() {
     return {
       incidencias: [],
+      averias: [],
+      gravedades: {
+        1: 'Maquina parada',
+        2: 'Maquina funcionando',
+        3: 'Aviso',
+        4: 'Mantenimiento'
+      },
     };
   },
   created() {
     this.fetchIncidences();
+    this.fetchAverias();
   },
   methods: {
     async fetchIncidences() {
@@ -42,6 +51,10 @@ export default {
       } catch (error) {
         console.error("Error al obtener las incidencias:", error);
       }
+    },
+    async fetchAverias() {
+      const response = await axios.get("http://127.0.0.1:8000/api/breakdowns");
+      this.averias = response.data;
     },
 
     updateList(newReport) {
@@ -56,6 +69,9 @@ export default {
         month: '2-digit',
         year: 'numeric'
       });
+    },
+    getGravedad(gravedadId) {
+      return this.gravedades[gravedadId] || 'Desconocido';
     }
   },
 };
