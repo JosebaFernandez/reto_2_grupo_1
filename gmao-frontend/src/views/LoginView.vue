@@ -40,16 +40,18 @@ export default {
     async handleLogin() {
       try {
         // Solicitud POST usando Axios
-        const response = await axios.post("http://127.0.0.1:8000/api/login", {
+        const response = await axios.post("http://127.0.0.1:8000/api/auth/login", {
           email: this.email,
           password: this.password,
         });
 
         // Guarda el token en localStorage
-        localStorage.setItem("token", response.data.token);
-
+        localStorage.setItem("token", response.data.access_token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        
         // Redirige a la página de inicio
         this.$router.push({ name: "Home" });
+        
       } catch (error) {
         // Manejo de errores
         if (error.response) {

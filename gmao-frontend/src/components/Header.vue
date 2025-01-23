@@ -17,13 +17,28 @@
       Otros
     </router-link></div>
     
-    <div class="user">Usuario</div>
+    <div class="user">
+      {{ username }}
+      <button @click="logout" class="logout-btn">Logout</button>
+    </div>
+    
   </div>
 </template>
 
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      username: JSON.parse(localStorage.getItem('user')).nombre + ' ' + JSON.parse(localStorage.getItem('user')).apellido || 'Usuario'
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push('/');
+    }
+  }
 };
 </script>
 
@@ -48,5 +63,18 @@ export default {
   font-size: 1.5rem;
   color: white;
   text-decoration: none;
+}
+.logout-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
 }
 </style>
