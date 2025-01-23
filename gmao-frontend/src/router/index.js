@@ -49,6 +49,7 @@ const routes = [
     name: "OtrosView",
     component: OtrosView,
     props: true,
+    
   },
   // Puedes añadir más rutas aquí en el futuro
 ];
