@@ -19,42 +19,36 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home,
-    meta: { requiresAuth: true },
   },
   {
     path: "/incident/:id",
     name: "IncidenciaView",
     component: IncidenciaView,
     props: true,
-    meta: { requiresAuth: true },
   },
   {
     path: "/maquinas",
     name: "MaquinasView",
     component: MaquinasView,
     props: true,
-    meta: { requiresAuth: true },
   },
   {
     path: "/usuarios",
     name: "UsuariosView",
     component: UsuariosView,
     props: true,
-    meta: { requiresAuth: true },
   },
   {
     path: "/tareas",
     name: "TareasView",
     component: TareasView,
     props: true,
-    meta: { requiresAuth: true },
   },
   {
     path: "/otros",
     name: "OtrosView",
     component: OtrosView,
     props: true,
-    meta: { requiresAuth: true },
   },
   // Puedes añadir más rutas aquí en el futuro
 ];
