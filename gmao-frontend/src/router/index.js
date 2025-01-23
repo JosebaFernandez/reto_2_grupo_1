@@ -12,9 +12,15 @@ import LoginView from '@/views/LoginView.vue';
 const routes = [
   {
     path: '/', // Ruta raíz
-    name: 'Home',
-    component: Home,
+    name: 'Login',
+    component: LoginView,
   },  
+  {
+    path: "/home",
+    name: "Home",
+    component: Home,
+    meta: { requiresAuth: true },
+  },
   {
     path: "/incident/:id",
     name: "IncidenciaView",
@@ -59,7 +65,7 @@ const router = createRouter({
 });
 
 // Middleware para verificar token
-/*router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -85,6 +91,6 @@ const router = createRouter({
   } else {
     next();
   }
-});*/
+});
 
 export default router;
