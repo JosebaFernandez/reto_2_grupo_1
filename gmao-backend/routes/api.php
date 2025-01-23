@@ -19,11 +19,8 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(AuthController::class)->prefix('auth')->group(function()
 {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout')->middleware('auth:api');
-    Route::post('refresh', 'refresh')->middleware('auth:api');
-    Route::get('me', 'me')->middleware('auth:api');
+    Route::post('/login', 'login');
+    // otras rutas...
 });
 
 Route::get('/campuses', [CampusController::class, 'index']);
