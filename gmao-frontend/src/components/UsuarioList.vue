@@ -23,7 +23,7 @@
     </div>
 
     <!-- Modal para cambio de rol -->
-    <div class="modal fade" id="roleModal" tabindex="-1" ref="roleModal">
+    <div class="modal" id="roleModal" tabindex="-1" ref="roleModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -52,7 +52,7 @@
     </div>
 
     <!-- Modal para deshabilitar usuario -->
-    <div class="modal fade" id="disableModal" tabindex="-1" ref="disableModal">
+    <div class="modal" id="disableModal" tabindex="-1" ref="disableModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">

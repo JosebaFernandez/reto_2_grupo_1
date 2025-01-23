@@ -26,7 +26,7 @@
   </div>
   
   <!-- Modal Dejar Incidencia -->
-  <div class="modal   fade" id="leaveIncidentModal" tabindex="-1" ref="leaveIncidentModal">
+  <div class="modal" id="leaveIncidentModal" tabindex="-1" ref="leaveIncidentModal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -40,6 +40,7 @@
               <option value="">Selecciona un motivo</option>
               <option value="falta_herramientas">Falta de herramientas</option>
               <option value="falta_conocimiento">Falta de conocimiento técnico</option>
+              <option value="falta_conocimiento">Falta de piezas</option>
               <option value="falta_tiempo">Falta de tiempo</option>
               <option value="otro">Otro</option>
             </select>
@@ -50,9 +51,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-registrar" @click="dejarIncidencia">Confirmar</button>
-        </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-dejar" @click="dejarIncidencia">Dejar incidencia</button>
+          </div>
       </div>
     </div>
   </div>
@@ -138,10 +139,16 @@ export default {
 .text-white {
   color: white;
 }
+
 .btn-registrar {
     background-color: #84005d;
-    color: white;
     margin-top: 10px;
+    color: white;
+}
+
+.btn-dejar {
+    background-color: #84005d;
+    color: white;
 }
 
 /* Añadir estas clases para la animación del modal */
