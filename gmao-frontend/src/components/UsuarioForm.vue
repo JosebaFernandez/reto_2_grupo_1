@@ -29,7 +29,7 @@
                 <select id="userRol" class="form-select" v-model="rol" required>
                     <option value="operario">Operario</option>
                     <option value="tecnico">Técnico</option>
-                    <option value="administrador">Administrador</option>
+                    <option value="admin">Administrador</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-registrar w-100">Registrar</button>
