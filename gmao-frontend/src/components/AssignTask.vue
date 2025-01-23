@@ -1,40 +1,52 @@
 <template>
-    <div v-if="visible" class="modal-overlay" @click.self="close">
-        <div class="modal-content">
-            <button class="modal-close" @click="close">×</button>
-            <h3>Asignar Tarea</h3>
-            <p>Selecciona una máquina para asignar la tarea "{{ task.nombre }}".</p>
-            <div class="mb-3">
-                <label for="machineCampus" class="form-label">Selecciona el campus:</label>
-                <select id="machineCampus" class="form-select" v-model="selectedCampus">
-                    <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">
-                        {{ campus.nombre }}
-                    </option>
-                </select>
+    <div class="modal fade" :class="{ show: visible }" id="assignTaskModal" tabindex="-1" :style="{ display: visible ? 'block' : 'none' }">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Asignar Tarea</h5>
+                    <button type="button" class="btn-close" @click="close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">
+                        <strong>Tarea:</strong> {{ task.nombre }}
+                    </p>
+                    <div class="mb-3">
+                        <label for="machineCampus" class="form-label"><strong>Selecciona el campus:</strong></label>
+                        <select id="machineCampus" class="form-select" v-model="selectedCampus">
+                            <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">
+                                {{ campus.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="machineSection" class="form-label">Selecciona la sección:</label>
+                        <select id="machineSection" class="form-select" v-model="selectedSeccion" :disabled="!filteredSecciones.length">
+                            <option v-for="seccion in filteredSecciones" :key="seccion.idSeccion" :value="seccion.idSeccion">
+                                {{ seccion.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="machine" class="form-label">Selecciona la máquina:</label>
+                        <select id="machine" class="form-select" v-model="selectedMaquina" :disabled="!filteredMaquinas.length">
+                            <option v-for="maquina in filteredMaquinas" :key="maquina.idMaquina" :value="maquina.idMaquina">
+                                {{ maquina.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskPeriod" class="form-label"><strong>Introduce cada cuantos días hay que hacerlo:</strong></label>
+                        <input type="number" id="taskPeriod" class="form-control" v-model="frecuencia">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="close">Cancelar</button>
+                    <button type="button" class="btn btn-registrar" @click="assignTask">Asignar</button>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="machineSection" class="form-label">Selecciona la sección:</label>
-                <select id="machineSection" class="form-select" v-model="selectedSeccion" :disabled="!filteredSecciones.length">
-                    <option v-for="seccion in filteredSecciones" :key="seccion.idSeccion" :value="seccion.idSeccion">
-                        {{ seccion.nombre }}
-                    </option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="machine" class="form-label">Selecciona la máquina:</label>
-                <select id="machine" class="form-select" v-model="selectedMaquina" :disabled="!filteredMaquinas.length">
-                    <option v-for="maquina in filteredMaquinas" :key="maquina.idMaquina" :value="maquina.idMaquina">
-                        {{ maquina.nombre }}
-                    </option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="taskPeriod" class="form-label">Introduce cada cuantos días hay que hacerlo:</label>
-                <input type="number" id="taskPeriod" class="form-control" v-model="frecuencia">
-            </div>
-            <button @click="assignTask" class="btn btn-registrar">Asignar</button>
         </div>
     </div>
+    <div v-if="visible" class="modal-backdrop fade" :class="{ show: visible }"></div>
 </template>
 
 <script>
@@ -130,40 +142,30 @@ export default {
 </script>
 
 <style scoped>
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+.modal {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-}
-
-.modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+.modal.fade.show {
+    display: block;
 }
 
 .btn-registrar {
     background-color: #84005d;
     color: white;
+}
+
+.btn-registrar:hover {
+    background-color: #6d004d;
+    color: white;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 </style>
