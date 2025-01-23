@@ -7,7 +7,7 @@ import OtrosView from "@/views/OtrosView.vue";
 import TareasView from "@/views/TareasView.vue";
 import LoginView from '@/views/LoginView.vue';
 
-
+ 
 
 const routes = [
   {
