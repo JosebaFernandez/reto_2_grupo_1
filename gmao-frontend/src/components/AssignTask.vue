@@ -64,6 +64,7 @@ export default {
             required: true,
         },
     },
+    emits: ['close'],  // Declarar el evento 'close' aquí
     data() {
         return {
             maquinas: [],
@@ -121,7 +122,7 @@ export default {
             }
         },
         close() {
-            this.$emit("close");
+            this.$emit("close");  // Emitir el evento 'close' cuando se cierre el modal
         },
         async assignTask() {
             try {

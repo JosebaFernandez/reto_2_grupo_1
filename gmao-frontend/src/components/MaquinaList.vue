@@ -16,13 +16,39 @@
     <!-- Renderizar máquinas si hay resultados -->
     <div v-for="maquina in filteredMaquinas" :key="maquina.idMaquina" class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ maquina.nombre }}</h5>
+        <h5 class="card-title">{{ maquina.nombre }}
+          <button @click="abrirModalDeshabilitar(maquina)" class="btn btn-deshabilitar">
+            Deshabilitar
+          </button>
+        </h5>
         <p class="card-text text-muted">
           <small>{{ maquina.idMaquina }}</small>
         </p>
         <p class="card-text"><b>Prioridad: </b>{{ maquina.prioridad }}</p>
         <p class="card-text"><b>Campus: </b>{{ getCampusName(maquina.idCampus) }}</p>
         <p class="card-text"><b>Sección: </b> {{ maquina.idSeccion }}</p>
+      </div>
+    </div>
+    <div class="modal" id="disableModal" tabindex="-1" ref="disableModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Deshabilitar maquina</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-2">
+              <strong>Maquina:</strong> {{ maquinaSeleccionada ? `${maquinaSeleccionada.nombre} ` : '' }}
+            </p> 
+            <p class="mb-3">
+              <strong>¿Estás seguro de que deseas deshabilitar esta maquina?</strong>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-registrar" @click="deshabilitarMaquina">Deshabilitar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -43,6 +69,7 @@ export default {
     return {
       maquinas: [],
       selectedCampus: "", // Campus seleccionado para el filtro
+      maquinaSeleccionada: null, // Maquina seleccionada para deshabilitar
     };
   },
   created() {
@@ -70,6 +97,22 @@ export default {
     updateList(newMachine) {
       this.maquinas.push(newMachine);
     },
+    abrirModalDeshabilitar(maquina) {
+      this.maquinaSeleccionada = maquina;
+      this.modalDeshabilitar.show();
+    },
+    async deshabilitarMaquina() {
+      try {
+        await axios.post(`http://127.0.0.1:8000/api/machines/deshabilitar/${this.maquinaSeleccionada.idMaquina}`);
+        this.maquinas = this.maquinas.filter(maquina => maquina.idMaquina !== this.maquinaSeleccionada.idMaquina);
+        this.modalDeshabilitar.hide();
+      } catch (error) {
+        console.error("Error al deshabilitar la maquina:", error);
+      }
+    },
+  },
+  mounted() {
+    this.modalDeshabilitar = new bootstrap.Modal(this.$refs.disableModal);
   },
 };
 </script>
@@ -94,5 +137,27 @@ export default {
 .form-select {
   display: inline-block;
   width: auto;
+}
+.btn-deshabilitar {
+  background-color: #dc3545;
+  color: white;
+  margin-right: 10px;
+  margin-left: 1em;
+}
+.btn-registrar {
+background-color: #84005d;
+color: white;
+margin-right: 10px;
+}
+.modal-dialog {
+  max-width: 400px;
+}
+
+:deep(.modal-backdrop.show) {
+  opacity: 0.5;
+}
+
+:deep(.modal.fade .modal-dialog) {
+  transform: translate(0, 0);
 }
 </style>

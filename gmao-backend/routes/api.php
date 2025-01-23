@@ -47,3 +47,6 @@ Route::post('/campuses/store', [CampusController::class, 'store']);
 Route::post('/users/store', [UserController::class, 'store']);
 Route::post('/users/cambiarRol/{idUsuario}', [UserController::class, 'cambiarRol']);
 Route::post('/users/deshabilitar/{idUsuario}', [UserController::class, 'deshabilitar']);
+Route::post('/incidences/deshabilitar/{idIncidencia}', [IncidenceController::class, 'deshabilitar']);
+Route::post('/machines/deshabilitar/{idMaquina}', [MachineController::class, 'deshabilitar']);
+Route::post('/tasks/deshabilitar/{idTarea}', [TaskController::class, 'deshabilitar']);

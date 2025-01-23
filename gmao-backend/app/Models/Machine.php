@@ -15,6 +15,7 @@ class Machine extends Model
 
     protected $fillable = [
         'idMaquina',
+        'habilitada',
         'nombre',
         'idCampus',
         'idSeccion',

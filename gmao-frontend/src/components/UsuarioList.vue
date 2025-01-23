@@ -211,15 +211,6 @@ export default {
   font-weight: bold;
 }
 
-.card-title a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-.card-title a:hover {
-  text-decoration: underline;
-}
-
 .btn-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;

@@ -10,7 +10,9 @@ class MachineController
 {
     public function index()
     {
-        $machines = Machine::with('section')->get();
+        $machines = Machine::with('section')
+                    ->where('habilitada', 1)
+                    ->get();
         return response()->json($machines);
     }
 
@@ -27,5 +29,13 @@ class MachineController
         ]);
 
         return response()->json(Machine::with('section')->find($maquinaId));
+    }
+
+    public function deshabilitar($idMaquina)
+    {
+        $machine = Machine::find($idMaquina);
+        $machine->habilitada = 0;
+        $machine->save();
+        return response()->json($machine);
     }
 }

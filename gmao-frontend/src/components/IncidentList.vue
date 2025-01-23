@@ -20,6 +20,9 @@
           <router-link :to="{ name: 'IncidenciaView', params: { id: incidencia.idIncidencia } }">
             {{ incidencia.titulo }}
           </router-link>
+          <button @click="abrirModalDeshabilitar(incidencia)" class="btn btn-deshabilitar">
+            Deshabilitar
+          </button>
         </h5>
         <p class="card-text text-muted">
           <small>{{ formatDate(incidencia.fechaReporte) }}</small>
@@ -27,7 +30,31 @@
         <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
         <p class="card-text"><b>Gravedad: </b>{{ getGravedad(incidencia.gravedad) }}</p>
         <p class="card-text"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
-        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre }}</p>
+        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre
+          }}</p>
+      </div>
+    </div>
+
+    <div class="modal" id="disableModal" tabindex="-1" ref="disableModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Deshabilitar incidencia</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-2">
+              <strong>Incidencia:</strong> {{ incidenciaSeleccionada ? `${incidenciaSeleccionada.titulo} ` : '' }}
+            </p> 
+            <p class="mb-3">
+              <strong>¿Estás seguro de que deseas deshabilitar esta incidencia?</strong>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-registrar" @click="deshabilitarIncidencia">Deshabilitar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +77,7 @@ export default {
         3: 'Aviso',
         4: 'Mantenimiento'
       },
+      incidenciaSeleccionada: null,
     };
   },
   created() {
@@ -106,8 +134,24 @@ export default {
     },
     getGravedad(gravedadId) {
       return this.gravedades[gravedadId] || 'Desconocido';
-    }
-  }
+    },
+    abrirModalDeshabilitar(incidencia) {
+      this.incidenciaSeleccionada = incidencia;
+      this.modalDeshabilitar.show();
+    },
+    async deshabilitarIncidencia() {
+      try {
+        await axios.post(`http://127.0.0.1:8000/api/incidences/deshabilitar/${this.incidenciaSeleccionada.idIncidencia}`);
+        this.incidencias = this.incidencias.filter(incidencia => incidencia.idIncidencia !== this.incidenciaSeleccionada.idIncidencia);
+        this.modalDeshabilitar.hide();
+      } catch (error) {
+        console.error("Error al deshabilitar la incidencia:", error);
+      }
+    },
+  },
+  mounted() {
+    this.modalDeshabilitar = new bootstrap.Modal(this.$refs.disableModal);
+  },
 };
 </script>
 
@@ -132,4 +176,28 @@ export default {
   display: inline-block;
   width: auto;
 }
+
+.btn-deshabilitar {
+  background-color: #dc3545;
+  color: white;
+  margin-right: 10px;
+  margin-left: 1em;
+}
+.btn-registrar {
+background-color: #84005d;
+color: white;
+margin-right: 10px;
+}
+.modal-dialog {
+  max-width: 400px;
+}
+
+:deep(.modal-backdrop.show) {
+  opacity: 0.5;
+}
+
+:deep(.modal.fade .modal-dialog) {
+  transform: translate(0, 0);
+}
+
 </style>

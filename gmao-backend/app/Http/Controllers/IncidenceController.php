@@ -10,15 +10,22 @@ class IncidenceController
 {
     public function index()
     {
-        $incidencias = Incidence::with(['machine', 'breakdown'])
-            ->where('estadoIncidencia', '!=', 'Resuelta')
-            ->orderBy('gravedad', 'asc')
-            ->join('machines', 'incidences.idMaquina', '=', 'machines.idMaquina')
-            ->orderBy('machines.prioridad', 'asc')
-            ->orderBy('incidences.fechaReporte', 'asc')
-            ->get();
+        try {
+            $incidencias = Incidence::with(['machine', 'breakdown'])
+                ->where('incidences.estadoIncidencia', '!=', 'Resuelta')
+                ->where('incidences.habilitada', 1)
+                ->orderBy('gravedad', 'asc')
+                ->join('machines', 'incidences.idMaquina', '=', 'machines.idMaquina')
+                ->orderBy('machines.prioridad', 'asc')
+                ->orderBy('incidences.fechaReporte', 'asc')
+                ->get();
 
-        return response()->json($incidencias);
+            return response()->json($incidencias);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Error fetching incidences: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     public function getIncidencia($idIncidencia)
@@ -51,5 +58,13 @@ class IncidenceController
         $incidencia->load(['machine', 'breakdown']);
 
         return response()->json($incidencia, 201);
+    }
+
+    public function deshabilitar($idIncidencia)
+    {
+        $incidence = Incidence::find($idIncidencia);
+        $incidence->habilitada = 0;
+        $incidence->save();
+        return response()->json($incidence);
     }
 }
