@@ -29,16 +29,16 @@
       <div class="mb-3">
         <label for="severity" class="form-label">Selecciona la gravedad:</label>
         <select id="severity" class="form-select" v-model="selectedSeverity">
-          <option value=""></option>
-          <option value="Máquina parada">Máquina parada</option>
-          <option value="Máquina en marcha">Máquina en marcha</option>
-          <option value="Aviso">Aviso</option>
+          <option value="0"></option>
+          <option value="1">Máquina parada</option>
+          <option value="2">Máquina en marcha</option>
+          <option value="3">Aviso</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="averia" class="form-label">Selecciona el tipo de avería:</label>
         <select id="averia" class="form-select" v-model="selectedAveria">
-          <option v-for="averia in averias" :key="averia.idAveria" :value="averia.idAveria">
+          <option v-for="averia in filteredAverias" :key="averia.idAveria" :value="averia.idAveria">
             {{ averia.nombre }}
           </option>
         </select>
@@ -77,6 +77,9 @@ export default {
     };
   },
   computed: {
+    filteredAverias() {
+      return this.averias.filter(averia => averia.idAveria !== 8);
+    },
     filteredSecciones() {
       if (!this.selectedCampus) return [];
       return this.secciones.filter(seccion =>
@@ -141,8 +144,8 @@ export default {
         const reportData = {
           idMaquina: this.selectedMaquina,
           titulo: this.title,
-          descripcion: this.description, 
-          estadoMaquina: this.selectedSeverity,
+          descripcion: this.description,
+          gravedad: this.selectedSeverity,
           idAveria: this.selectedAveria,
         };
 

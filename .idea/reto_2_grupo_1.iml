@@ -45,6 +45,8 @@
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/laravel/sanctum" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/laravel/serializable-closure" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/lcobucci/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/lcobucci/jwt" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/league/commonmark" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/league/config" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/league/flysystem" />
@@ -55,6 +57,7 @@
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/namshi/jose" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/nette/schema" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/nette/utils" />
@@ -98,6 +101,7 @@
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/sebastian/type" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/sebastian/version" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/staabm/side-effects-detector" />
+      <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/stella-maris/clock" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/symfony/clock" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/symfony/console" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/symfony/css-selector" />
@@ -130,9 +134,11 @@
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/tymon/jwt-auth" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/gmao-backend/vendor/php-open-source-saver/jwt-auth" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

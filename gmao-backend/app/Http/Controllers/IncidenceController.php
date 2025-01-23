@@ -17,11 +17,11 @@ class IncidenceController
             ->orderBy('machines.prioridad', 'asc')
             ->orderBy('incidences.fechaReporte', 'asc')
             ->get();
-        
+
         return response()->json($incidencias);
     }
 
-    public function getIncidencia($idIncidencia) 
+    public function getIncidencia($idIncidencia)
     {
         $incidencia = Incidence::with(['machine', 'breakdown'])->find($idIncidencia);
         if (!$incidencia) {
@@ -37,29 +37,14 @@ class IncidenceController
             'idMaquina' => 'required|exists:machines,idMaquina',
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'estadoMaquina' => 'required|string|max:255',
+            'gravedad' => 'required|string',
             'idAveria' => 'required|exists:breakdowns,idAveria',
-        ]); 
+        ]);
 
         $validatedData['fechaReporte'] = now()->format('Y-m-d');
         $validatedData['fechaResolucion'] = null;
         $validatedData['estadoIncidencia'] = 'Abierta';
         $validatedData['habilitada'] = true;
-
-        switch ($validatedData['estadoMaquina']) {
-            case 'Máquina parada':
-                $validatedData['gravedad'] = 1;
-                break;
-            case 'Máquina en marcha':
-                $validatedData['gravedad'] = 2;
-                break;
-            case 'Aviso':
-                $validatedData['gravedad'] = 3;
-                break;
-            default:
-                $validatedData['gravedad'] = 0;
-                break;
-        }
 
         $incidencia = Incidence::create($validatedData);
 

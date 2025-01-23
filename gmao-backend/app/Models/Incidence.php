@@ -20,7 +20,6 @@ class Incidence extends Model
         'descripcion',
         'fechaResolucion',
         'estadoIncidencia',
-        'estadoMaquina',
         'habilitada',
         'gravedad',
         'idAveria'
