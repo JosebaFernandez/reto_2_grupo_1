@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Order;
+use App\Models\Task;
 
 
 class UserController
@@ -60,5 +62,70 @@ class UserController
         $user->save();
         return response()->json($user);
     }
-    
+
+    public function adminDashboard()
+    {
+        // Solo accesible para administradores
+        return view('admin.dashboard');
+    }
+
+    public function operarioDashboard()
+    {
+        // Solo accesible para operarios
+        return view('operario.dashboard');
+    }
+
+    public function tecnicoDashboard()
+    {
+        // Solo accesible para técnicos
+        return view('tecnico.dashboard');
+    }
+
+    public function dashboard()
+    {
+        // Accesible para usuarios normales y administradores
+        return view('dashboard');
+    }
+
+    public function adminDashboardData()
+    {
+        return response()->json([
+            'title' => 'Panel de Administración',
+            'stats' => [
+                'total_users' => User::count(),
+                'active_orders' => Order::where('status', 'active')->count(),
+                // otros datos relevantes
+            ],
+            'recent_activities' => [
+                // datos de actividades recientes
+            ]
+        ]);
+    }
+
+    public function operarioDashboardData()
+    {
+        return response()->json([
+            'title' => 'Panel de Operario',
+            'orders' => [
+                'pending' => Order::where('status', 'pending')->count(),
+                'in_progress' => Order::where('status', 'in_progress')->count(),
+            ],
+            'recent_orders' => Order::latest()->take(5)->get()
+        ]);
+    }
+
+    public function tecnicoDashboardData()
+    {
+        return response()->json([
+            'title' => 'Panel de Técnico',
+            'tasks' => [
+                'assigned' => Task::where('technician_id', auth()->id())
+                                ->where('status', 'pending')
+                                ->get(),
+                'in_progress' => Task::where('technician_id', auth()->id())
+                                    ->where('status', 'in_progress')
+                                    ->get()
+            ]
+        ]);
+    }
 }

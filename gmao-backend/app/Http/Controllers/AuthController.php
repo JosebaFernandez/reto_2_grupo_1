@@ -44,6 +44,7 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' =>env('JWT_TTL') * 60,
             'user' => $user,
+            'rol' => $user->rol,
         ]);
     }
 
