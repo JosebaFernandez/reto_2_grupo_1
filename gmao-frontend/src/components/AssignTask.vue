@@ -11,7 +11,7 @@
                         <strong>Tarea:</strong> {{ task.nombre }}
                     </p>
                     <div class="mb-3">
-                        <label for="machineCampus" class="form-label"><strong>Selecciona el campus:</strong></label>
+                        <label for="machineCampus" class="form-label">Selecciona el campus:</label>
                         <select id="machineCampus" class="form-select" v-model="selectedCampus">
                             <option v-for="campus in campuses" :key="campus.idCampus" :value="campus.idCampus">
                                 {{ campus.nombre }}
@@ -35,7 +35,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="taskPeriod" class="form-label"><strong>Introduce cada cuantos días hay que hacerlo:</strong></label>
+                        <label for="taskPeriod" class="form-label">Introduce cada cuantos días hay que hacerlo:</label>
                         <input type="number" id="taskPeriod" class="form-control" v-model="frecuencia">
                     </div>
                 </div>

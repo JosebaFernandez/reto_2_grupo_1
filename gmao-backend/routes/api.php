@@ -35,6 +35,8 @@ Route::get('/breakdowns', [BreakdownController::class, 'index']);
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/tasks', [TaskController::class, 'index']);
 
+Route::get('/interventions', [InterventionController::class, 'checkActiveIntervention']);
+
 Route::get('/incidences/{idIncidencia}', [IncidenceController::class, 'getIncidencia']);
 Route::get('/interventions/{idIncidencia}', [InterventionController::class, 'getIntervenciones']);
 
@@ -51,3 +53,7 @@ Route::post('/users/deshabilitar/{idUsuario}', [UserController::class, 'deshabil
 Route::post('/incidences/deshabilitar/{idIncidencia}', [IncidenceController::class, 'deshabilitar']);
 Route::post('/machines/deshabilitar/{idMaquina}', [MachineController::class, 'deshabilitar']);
 Route::post('/tasks/deshabilitar/{idTarea}', [TaskController::class, 'deshabilitar']);
+Route::post('/interventions', [InterventionController::class, 'store']);
+
+Route::put('/api/interventions/{idIntervencion}', [InterventionController::class, 'update']);
+
