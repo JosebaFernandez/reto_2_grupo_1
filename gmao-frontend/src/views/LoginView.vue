@@ -48,6 +48,7 @@ export default {
         // Guarda el token en localStorage
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("rol", response.data.user.rol);
         
         // Redirige a la página de inicio
         this.$router.push({ name: "Home" });
