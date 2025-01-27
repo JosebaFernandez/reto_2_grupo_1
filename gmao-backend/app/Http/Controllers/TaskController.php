@@ -4,28 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
-use Illuminate\Support\Facades\Validator;
 
 class TaskController
 {
     public function index()
     {
-        $tasks = Task::where('habilitada', 1)
-                     ->get();
+        $tasks = Task::where('habilitada', 1)->get();
         return response()->json($tasks);
     }
+
     public function store(Request $request)
     {
+        // Validar que el nombre sea único
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|unique:tasks,nombre',
+            'descripcion' => 'required|string',
+        ]);
 
-        $task = Task::create([
-                'nombre' => $request->get('nombre'),
-                'descripcion' => $request->get('descripcion'),
-            ]
-
-        );
+        $task = Task::create($validatedData);
 
         return response()->json($task, 201);
     }
+    public function findByName($nombre)
+    {
+        \Log::info("Buscando tarea con nombre: $nombre");
+
+        $task = Task::where('nombre', $nombre)->first();
+
+        if ($task) {
+            return response()->json($task);
+        }
+
+        return response()->json(['message' => 'Task not found'], 404);
+    }
+
+
     public function deshabilitar($idTarea)
     {
         $task = Task::find($idTarea);
@@ -34,4 +47,3 @@ class TaskController
         return response()->json($task);
     }
 }
-

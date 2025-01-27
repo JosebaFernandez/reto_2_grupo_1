@@ -11,7 +11,7 @@
         <span class="info-label">Máquina:</span> {{ incidencia.machine.nombre }}
       </li>
       <li>
-        <span class="info-label">Gravedad:</span> {{ incidencia.gravedad }}
+        <span class="info-label">Gravedad:</span> {{ getGravedad(incidencia.gravedad) }}
       </li>
       <li>
         <span class="info-label">Tipo de avería:</span> {{ incidencia.breakdown.nombre }}
@@ -25,8 +25,8 @@
         </button>
 
         <!-- Botón "Dejar incidencia" solo si hay intervención activa -->
-        <button v-if="thisInterventionActive" type="button" class="btn btn-registrar w-100"
-          data-bs-toggle="modal" data-bs-target="#leaveIncidentModal">
+        <button v-if="thisInterventionActive" type="button" class="btn btn-registrar w-100" data-bs-toggle="modal"
+          data-bs-target="#leaveIncidentModal">
           Dejar incidencia
         </button>
 
@@ -98,6 +98,12 @@ export default {
       interventionActive: false, // Nueva propiedad para verificar intervención activa
       thisInterventionActive: false,
       activeInterventionId: null,
+      gravedades: {
+        1: 'Maquina parada',
+        2: 'Maquina funcionando',
+        3: 'Aviso',
+        4: 'Mantenimiento'
+      },
     };
   },
   created() {
@@ -120,6 +126,9 @@ export default {
         console.error("Error al obtener la incidencia:", error);
       }
     },
+    getGravedad(gravedadId) {
+      return this.gravedades[gravedadId] || 'Desconocido';
+    },
     async tomarIncidencia() {
       if (this.idUsuario === null) {
         console.error("Error: userId no está definido");
@@ -141,8 +150,6 @@ export default {
         );
         console.log("Intervención registrada:", response.data);
 
-        // Mostrar mensaje de éxito
-        alert("La intervención fue registrada exitosamente.");
       } catch (error) {
         console.error("Error al tomar la incidencia:", error);
         alert("Ocurrió un error al registrar la intervención.");
@@ -160,7 +167,6 @@ export default {
         );
 
         const intervention = activeInterventionResponse.data.intervention; // Access the 'intervention' object here
-        console.log("Intervención activa:", intervention);
 
         // Verificamos si la intervención está activa
         if (!intervention || intervention.fechaFin !== null) {
@@ -185,14 +191,23 @@ export default {
           updatedIntervention
         );
 
-        console.log("Intervención cerrada:", response.data);
-        alert("La intervención ha sido cerrada correctamente.");
-        console.log(this.incidencia.idIncidencia);
-        if(this.leaveReason=="Incidencia resuelta"){
+        if (this.leaveReason == "Incidencia resuelta") {
           const response = await axios.put(
             `http://127.0.0.1:8000/api/incidences/${this.incidencia.idIncidencia}`,
-        );
+          );
+          if (this.incidencia.gravedad == 4) {
+            const responseTarea = await axios.get(
+              `http://127.0.0.1:8000/api/tasks/find-by-name/${encodeURIComponent(this.incidencia.titulo)}`
+            );
+
+            const idTarea = responseTarea.data.idTarea;
+
+            const responseManteni = await axios.put(
+              `http://127.0.0.1:8000/api/maintenances/${this.incidencia.idMaquina}/${idTarea}`,
+            );
+          };
         }
+
         // Cerrar el modal
         const modal = bootstrap.Modal.getInstance(this.$refs.leaveIncidentModal);
         modal.hide();
@@ -211,7 +226,6 @@ export default {
           `http://127.0.0.1:8000/api/interventions?userId=${this.idUsuario}&incidentId=${this.idIncidencia}`
         );
 
-        console.log("Respuesta completa de intervención activa:", response.data);  // Ver respuesta completa
         if (this.incidencia.idIncidencia == response.data.intervention.idIncidencia && response.data && response.data.active) {
           this.thisInterventionActive = true;
         } else {
@@ -230,7 +244,6 @@ export default {
             }
 
             this.activeInterventionId = incidentId;
-            console.log(this.activeInterventionId);
           } else {
             this.interventionActive = false;  // No hay intervención activa
             console.log("Estado de intervención activa:", this.interventionActive);
