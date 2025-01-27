@@ -57,6 +57,8 @@ Route::post('/interventions', [InterventionController::class, 'store']);
 
 Route::put('/interventions/{idIntervencion}', [InterventionController::class, 'updateIntervention']);
 
+Route::put('/incidences/{idIncidencia}', [IncidenceController::class, 'updateIncidence']);
+
 
 Route::put('/interventions/{idIntervencion}/leave', [InterventionController::class, 'leaveIntervention']);
 Route::post('/interventions/leave/{idIntervencion}', [InterventionController::class, 'leaveIntervention']);

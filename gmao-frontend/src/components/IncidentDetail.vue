@@ -54,11 +54,12 @@
             <label for="reasonSelect" class="form-label">Motivo:</label>
             <select class="form-select" id="reasonSelect" v-model="leaveReason">
               <option value="">Selecciona un motivo</option>
-              <option value="falta_herramientas">Falta de herramientas</option>
-              <option value="falta_conocimiento">Falta de conocimiento técnico</option>
-              <option value="falta_piezas">Falta de piezas</option>
-              <option value="falta_tiempo">Falta de tiempo</option>
-              <option value="otro">Otro</option>
+              <option value="Incidencia resuelta">Incidencia resuelta</option>
+              <option value="Falta de herramientas">Falta de herramientas</option>
+              <option value="Falta de conocimiento">Falta de conocimiento técnico</option>
+              <option value="Falta de piezas">Falta de piezas</option>
+              <option value="Falta de tiempo">Falta de tiempo</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
           <div class="mb-3">
@@ -180,13 +181,18 @@ export default {
 
         // Actualizar la intervención usando la URL correcta
         const response = await axios.put(
-          `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}/leave`, // Correct URL
+          `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}/leave`,
           updatedIntervention
         );
 
         console.log("Intervención cerrada:", response.data);
         alert("La intervención ha sido cerrada correctamente.");
-
+        console.log(this.incidencia.idIncidencia);
+        if(this.leaveReason=="Incidencia resuelta"){
+          const response = await axios.put(
+            `http://127.0.0.1:8000/api/incidences/${this.incidencia.idIncidencia}`,
+        );
+        }
         // Cerrar el modal
         const modal = bootstrap.Modal.getInstance(this.$refs.leaveIncidentModal);
         modal.hide();
