@@ -18,17 +18,17 @@
       </li>
       <li>
         <p class="incident-description">{{ incidencia.descripcion }}</p>
-
-        <!-- Si no hay intervención activa, mostrar "Tomar incidencia" -->
+        <!-- Mostrar "Tomar incidencia" solo si no hay intervención activa -->
         <button v-if="!interventionActive" type="button" class="btn btn-registrar w-100" @click="tomarIncidencia">
           Tomar incidencia
         </button>
 
-        <!-- Si hay intervención activa, mostrar "Dejar incidencia" -->
+        <!-- Mostrar "Dejar incidencia" solo si hay intervención activa -->
         <button v-if="interventionActive" type="button" class="btn btn-registrar w-100" data-bs-toggle="modal"
           data-bs-target="#leaveIncidentModal">
           Dejar incidencia
         </button>
+
       </li>
     </ul>
   </div>
@@ -71,7 +71,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 
@@ -93,6 +92,7 @@ export default {
   created() {
     this.fetchIncidence();
     this.checkActiveIntervention(); // Comprobar intervención activa al cargar el componente
+    console.log("Comprobando intervención activa...");
   },
 
   methods: {
@@ -145,31 +145,29 @@ export default {
           `http://127.0.0.1:8000/api/interventions?userId=${this.idUsuario}&incidentId=${this.idIncidencia}`
         );
 
-        const intervention = activeInterventionResponse.data;
+        const intervention = activeInterventionResponse.data.intervention; // Access the 'intervention' object here
         console.log("Intervención activa:", intervention);
 
         // Verificamos si la intervención está activa
-        if (!intervention || !intervention.active) {
+        if (!intervention || intervention.fechaFin !== null) {
           alert("No hay una intervención activa para esta incidencia.");
           return;
         }
-        console.log("Intervención ID:", intervention.idIntervencion);
-        // Aseguramos que la intervención tiene el idIntervencion
-        if (!intervention.idIntervencion) {
-          alert("No se encontró el ID de la intervención.");
-          return;
-        }
+
+        // Convertir la fecha de finalización a un formato compatible con MySQL
+        const fechaFin = new Date(); // Fecha y hora actuales
+        const formattedFechaFin = fechaFin.toISOString().slice(0, 19).replace('T', ' '); // Formato MySQL: "YYYY-MM-DD HH:MM:SS"
 
         // Actualizamos los datos de la intervención
         const updatedIntervention = {
-          ...intervention,
-          fechaFin: new Date().toISOString(),
+          fechaFin: formattedFechaFin,
           motivo: this.leaveReason,
           notas: `Comentarios: ${this.leaveComment}`,
         };
 
+        // Actualizar la intervención usando la URL correcta
         const response = await axios.put(
-          `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}`,
+          `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}/leave`, // Correct URL
           updatedIntervention
         );
 
@@ -189,26 +187,25 @@ export default {
     },
     async checkActiveIntervention() {
       try {
-        // Comprobar si existe una intervención activa (fechaFin es null) para el usuario y la incidencia
         const response = await axios.get(
           `http://127.0.0.1:8000/api/interventions?userId=${this.idUsuario}&incidentId=${this.idIncidencia}`
         );
 
-        console.log("Respuesta de intervención activa:", response.data);  // Verifica los datos de la respuesta
+        console.log("Respuesta completa de intervención activa:", response.data);  // Ver respuesta completa
 
         if (response.data && response.data.active) {
-          this.interventionActive = true; // Existe una intervención activa
+          this.interventionActive = true; // Hay una intervención activa
         } else {
-          this.interventionActive = false;  // Si no tiene intervención activa, aseguramos que no esté bloqueado
+          this.interventionActive = false;  // No hay intervención activa
         }
+
+        console.log("Estado de intervención activa:", this.interventionActive);
       } catch (error) {
         console.error("Error al comprobar la intervención activa:", error);
         this.interventionActive = false; // En caso de error, no bloqueamos el botón
       }
     }
-
   }
-
 };
 </script>
 

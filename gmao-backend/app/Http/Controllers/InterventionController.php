@@ -6,27 +6,28 @@ use Illuminate\Http\Request;
 use App\Models\Intervention;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class InterventionController
 {
+    // Existing method to get interventions
     public function getIntervenciones($idIncidencia)
     {
         $intervenciones = Intervention::with('tecnico')->where('idIncidencia', $idIncidencia)->get();
         return response()->json($intervenciones);
     }
+
+    // Existing method to store interventions
     public function store(Request $request)
     {
-        // Convierte 'fechaInicio' al formato esperado por MySQL
         $fechaInicio = Carbon::parse($request->input('fechaInicio'))->toDateTimeString();
         $request->merge(['fechaInicio' => $fechaInicio]);
 
-        // Si 'fechaFin' también puede venir en formato ISO, conviértelo también
         if ($request->input('fechaFin')) {
             $fechaFin = Carbon::parse($request->input('fechaFin'))->toDateTimeString();
             $request->merge(['fechaFin' => $fechaFin]);
         }
 
-        // Validar los datos recibidos
         $validated = $request->validate([
             'idTecnico' => 'required|exists:users,idUsuario',
             'idIncidencia' => 'required|exists:incidences,idIncidencia',
@@ -35,38 +36,72 @@ class InterventionController
             'notas' => 'nullable|string',
         ]);
 
-        // Crear la intervención en la base de datos
         $intervention = Intervention::create($validated);
-
 
         return response()->json($intervention, 201);
     }
 
+    // Check if a user has an active intervention
     public function checkActiveIntervention(Request $request)
     {
-        // Recuperar los parámetros 'userId' y 'incidentId' enviados en la solicitud GET
         $userId = $request->query('userId');
-        $incidentId = $request->query('incidentId');
 
-        // Buscar una intervención activa para el técnico (idTecnico) en la incidencia (idIncidencia)
         $intervention = Intervention::where('idTecnico', $userId)
-            ->where('idIncidencia', $incidentId)
-            ->whereNull('fechaFin') // Comprobar que la intervención aún esté activa
+            ->whereNull('fechaFin') // Active intervention
             ->first();
 
-        // Retornar la respuesta en formato JSON con los datos de la intervención activa, si existe
         if ($intervention) {
             return response()->json([
                 'active' => true,
-                'intervention' => $intervention
-            ]);
-        } else {
-            return response()->json([
-                'active' => false
+                'intervention' => $intervention,
             ]);
         }
+
+        return response()->json(['active' => false]);
     }
 
+    // Leave an intervention (mark it as completed)
+    public function leaveIntervention(Request $request, $idIntervencion)
+    {
+        $intervention = Intervention::find($idIntervencion);
 
+        if (!$intervention || $intervention->fechaFin) {
+            return response()->json(['error' => 'Intervention not found or already closed'], 400);
+        }
 
+        $validated = $request->validate([
+            'fechaFin' => 'required|date',
+            'motivo' => 'required|string|max:255',
+            'notas' => 'nullable|string',
+        ]);
+
+        // Update the intervention with the new data
+        $intervention->update($validated);
+
+        return response()->json(['message' => 'Intervention closed successfully', 'intervention' => $intervention]);
+    }
+
+    // New method to update an intervention
+    public function updateIntervention(Request $request, $idIntervencion)
+    {
+        // Get the date and time string from the request
+        $fechaFin = Carbon::parse($request->input('fechaFin'))->format('Y-m-d H:i:s');
+
+        // Update the intervention record
+        $intervention = Intervention::where('idIntervencion', $idIntervencion)->first();
+
+        if (!$intervention) {
+            return response()->json(['error' => 'Intervention not found'], 404);
+        }
+
+        // Update the intervention details
+        $intervention->update([
+            'fechaFin' => $fechaFin,
+            'notas' => $request->input('notas'),
+            'motivo' => $request->input('motivo'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        return response()->json(['message' => 'Intervention updated successfully', 'intervention' => $intervention]);
+    }
 }

@@ -55,5 +55,9 @@ Route::post('/machines/deshabilitar/{idMaquina}', [MachineController::class, 'de
 Route::post('/tasks/deshabilitar/{idTarea}', [TaskController::class, 'deshabilitar']);
 Route::post('/interventions', [InterventionController::class, 'store']);
 
-Route::put('/api/interventions/{idIntervencion}', [InterventionController::class, 'update']);
+Route::put('/interventions/{idIntervencion}', [InterventionController::class, 'updateIntervention']);
 
+
+Route::put('/interventions/{idIntervencion}/leave', [InterventionController::class, 'leaveIntervention']);
+Route::post('/interventions/leave/{idIntervencion}', [InterventionController::class, 'leaveIntervention']);
+Route::get('/interventions/check-active', [InterventionController::class, 'checkActiveIntervention']);
