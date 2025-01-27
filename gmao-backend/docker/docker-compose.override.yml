@@ -1,0 +1,17 @@
+services:
+
+  https-portal:
+    environment:
+      DOMAINS: >
+        mailpit.blog.test -> http://mailpit:8025,
+        ${HTTPS_PORTAL_SITES}
+    depends_on:
+      - mailpit
+
+  phpmyadmin:
+    environment:
+      - PMA_USER=root
+      - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+  mailpit:
+    image: axllent/mailpit:${MAILPIT_VERSION:-latest}
