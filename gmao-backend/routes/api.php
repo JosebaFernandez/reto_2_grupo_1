@@ -59,7 +59,13 @@ Route::put('/interventions/{idIntervencion}', [InterventionController::class, 'u
 
 Route::put('/incidences/{idIncidencia}', [IncidenceController::class, 'updateIncidence']);
 
+Route::put('maintenances/{idMaquina}/{idTarea}', [MaintenanceController::class, 'updateMaintenance']);
 
 Route::put('/interventions/{idIntervencion}/leave', [InterventionController::class, 'leaveIntervention']);
 Route::post('/interventions/leave/{idIntervencion}', [InterventionController::class, 'leaveIntervention']);
 Route::get('/interventions/', [InterventionController::class, 'checkActiveIntervention']);
+
+Route::get('/tasks/find-by-name/{nombre}', [TaskController::class, 'findByName']);
+
+
+
