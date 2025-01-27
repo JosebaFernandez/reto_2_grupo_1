@@ -19,16 +19,24 @@
       <li>
         <p class="incident-description">{{ incidencia.descripcion }}</p>
         <!-- Mostrar "Tomar incidencia" solo si no hay intervención activa -->
-        <button v-if="!interventionActive" type="button" class="btn btn-registrar w-100" @click="tomarIncidencia">
+        <button v-if="!interventionActive && !thisInterventionActive" type="button" class="btn btn-registrar w-100"
+          @click="tomarIncidencia(incidencia.idIncidencia)">
           Tomar incidencia
         </button>
 
-        <!-- Mostrar "Dejar incidencia" solo si hay intervención activa -->
-        <button v-if="interventionActive" type="button" class="btn btn-registrar w-100" data-bs-toggle="modal"
-          data-bs-target="#leaveIncidentModal">
+        <!-- Botón "Dejar incidencia" solo si hay intervención activa -->
+        <button v-if="thisInterventionActive" type="button" class="btn btn-registrar w-100"
+          data-bs-toggle="modal" data-bs-target="#leaveIncidentModal">
           Dejar incidencia
         </button>
 
+        <p v-if="interventionActive && !thisInterventionActive" class="text-muted">
+          Ya estás trabajando en la incidencia "
+          <router-link :to="{ name: 'IncidenciaView', params: { id: activeInterventionId } }">
+            {{ activeIncidentTitle }}
+          </router-link>
+          "
+        </p>
       </li>
     </ul>
   </div>
@@ -46,11 +54,12 @@
             <label for="reasonSelect" class="form-label">Motivo:</label>
             <select class="form-select" id="reasonSelect" v-model="leaveReason">
               <option value="">Selecciona un motivo</option>
-              <option value="falta_herramientas">Falta de herramientas</option>
-              <option value="falta_conocimiento">Falta de conocimiento técnico</option>
-              <option value="falta_piezas">Falta de piezas</option>
-              <option value="falta_tiempo">Falta de tiempo</option>
-              <option value="otro">Otro</option>
+              <option value="Incidencia resuelta">Incidencia resuelta</option>
+              <option value="Falta de herramientas">Falta de herramientas</option>
+              <option value="Falta de conocimiento">Falta de conocimiento técnico</option>
+              <option value="Falta de piezas">Falta de piezas</option>
+              <option value="Falta de tiempo">Falta de tiempo</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
           <div class="mb-3">
@@ -87,6 +96,8 @@ export default {
       leaveComment: "",
       idUsuario: JSON.parse(localStorage.getItem('user')).idUsuario || null,
       interventionActive: false, // Nueva propiedad para verificar intervención activa
+      thisInterventionActive: false,
+      activeInterventionId: null,
     };
   },
   created() {
@@ -102,6 +113,9 @@ export default {
           `http://127.0.0.1:8000/api/incidences/${this.idIncidencia}`
         );
         this.incidencia = response.data;
+
+        // Verifica el estado de intervención para esta incidencia
+        this.checkActiveIntervention(this.idIncidencia);
       } catch (error) {
         console.error("Error al obtener la incidencia:", error);
       }
@@ -167,19 +181,25 @@ export default {
 
         // Actualizar la intervención usando la URL correcta
         const response = await axios.put(
-          `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}/leave`, // Correct URL
+          `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}/leave`,
           updatedIntervention
         );
 
         console.log("Intervención cerrada:", response.data);
         alert("La intervención ha sido cerrada correctamente.");
-
+        console.log(this.incidencia.idIncidencia);
+        if(this.leaveReason=="Incidencia resuelta"){
+          const response = await axios.put(
+            `http://127.0.0.1:8000/api/incidences/${this.incidencia.idIncidencia}`,
+        );
+        }
         // Cerrar el modal
         const modal = bootstrap.Modal.getInstance(this.$refs.leaveIncidentModal);
         modal.hide();
 
         // Actualizar el estado de intervención activa
         this.interventionActive = false;
+        this.thisInterventionActive = false;
       } catch (error) {
         console.error("Error al dejar la incidencia:", error);
         alert("Ocurrió un error al cerrar la intervención.");
@@ -192,14 +212,30 @@ export default {
         );
 
         console.log("Respuesta completa de intervención activa:", response.data);  // Ver respuesta completa
-
-        if (response.data && response.data.active) {
-          this.interventionActive = true; // Hay una intervención activa
+        if (this.incidencia.idIncidencia == response.data.intervention.idIncidencia && response.data && response.data.active) {
+          this.thisInterventionActive = true;
         } else {
-          this.interventionActive = false;  // No hay intervención activa
-        }
+          this.thisInterventionActive = false;
+          if (response.data && response.data.active) {
+            this.interventionActive = true;
 
-        console.log("Estado de intervención activa:", this.interventionActive);
+            // Obtener el título de la incidencia activa
+            const incidentId = response.data.intervention.idIncidencia;
+            const incidentResponse = await axios.get(
+              `http://127.0.0.1:8000/api/incidences/${incidentId}`
+            );
+
+            if (incidentResponse.data) {
+              this.activeIncidentTitle = incidentResponse.data.titulo || "Título desconocido"; // Almacenar el título de la incidencia
+            }
+
+            this.activeInterventionId = incidentId;
+            console.log(this.activeInterventionId);
+          } else {
+            this.interventionActive = false;  // No hay intervención activa
+            console.log("Estado de intervención activa:", this.interventionActive);
+          }
+        }
       } catch (error) {
         console.error("Error al comprobar la intervención activa:", error);
         this.interventionActive = false; // En caso de error, no bloqueamos el botón
@@ -257,5 +293,9 @@ export default {
 
 .modal.show .modal-dialog {
   transform: scale(1);
+}
+
+.text-muted {
+  color: #6c757d;
 }
 </style>

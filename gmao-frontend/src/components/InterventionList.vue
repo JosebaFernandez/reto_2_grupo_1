@@ -9,6 +9,7 @@
         <div class="intervenciones">
           <p class="card-text">{{ intervencion.tecnico.nombre + " " + intervencion.tecnico.apellido }}</p>
           <p class="card-text">{{ intervencion.fechaInicio }} - {{ intervencion.fechaFin }}</p>
+          <p class="card-text">Motivo abandono: {{ intervencion.motivo }}</p>
           <p class="card-text">{{ intervencion.notas }}</p>
         </div>
       </div>

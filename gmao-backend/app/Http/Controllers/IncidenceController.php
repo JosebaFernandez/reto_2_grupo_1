@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Incidence;
 use App\Models\Intervention;
@@ -66,5 +67,28 @@ class IncidenceController
         $incidence->habilitada = 0;
         $incidence->save();
         return response()->json($incidence);
+    }
+    public function updateIncidence(Request $request, $idIncidencia)
+    {
+
+        // Update the intervention record
+        $incidence = Incidence::where('idIncidencia', $idIncidencia)->first();
+
+        if (!$incidence) {
+            return response()->json(['error' => 'Incidence not found'], 404);
+        }
+
+        // Update the intervention details
+        try {
+            $incidence->update([
+                'estadoIncidencia' => 'Resuelta',
+                'habilitada' => 0,
+                'fechaResolucion' => Carbon::now()->format('Y-m-d'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }catch (\Exception $e) {
+            \Log::error('Error updating incidence: ' . $e->getMessage());
+        }
+        return response()->json(['message' => 'Incidence updated successfully', 'incidence' => $incidence]);
     }
 }
