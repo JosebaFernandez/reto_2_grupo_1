@@ -35,7 +35,7 @@ Route::get('/breakdowns', [BreakdownController::class, 'index']);
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/tasks', [TaskController::class, 'index']);
 
-Route::get('/interventions', [InterventionController::class, 'checkActiveIntervention']);
+//Route::get('/interventions', [InterventionController::class, 'checkActiveIntervention']);
 
 Route::get('/incidences/{idIncidencia}', [IncidenceController::class, 'getIncidencia']);
 Route::get('/interventions/{idIncidencia}', [InterventionController::class, 'getIntervenciones']);
@@ -60,4 +60,4 @@ Route::put('/interventions/{idIntervencion}', [InterventionController::class, 'u
 
 Route::put('/interventions/{idIntervencion}/leave', [InterventionController::class, 'leaveIntervention']);
 Route::post('/interventions/leave/{idIntervencion}', [InterventionController::class, 'leaveIntervention']);
-Route::get('/interventions/check-active', [InterventionController::class, 'checkActiveIntervention']);
+Route::get('/interventions/', [InterventionController::class, 'checkActiveIntervention']);
