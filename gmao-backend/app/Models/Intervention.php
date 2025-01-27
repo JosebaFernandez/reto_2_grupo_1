@@ -18,8 +18,10 @@ class Intervention extends Model
         'idIncidencia',
         'fechaInicio',
         'fechaFin',
-        'notas'
+        'motivo',
+        'notas',
     ];
+
 
     public function tecnico()
     {

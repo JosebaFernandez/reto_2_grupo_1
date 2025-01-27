@@ -17,10 +17,7 @@
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$PROJECT_DIR$/gmao-backend/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/gmao-backend/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/archtechx/enums" />
-      <path value="$PROJECT_DIR$/gmao-backend/vendor/carbonphp/carbon-doctrine-types" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/fakerphp/faker" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/ralouphie/getallheaders" />
@@ -117,7 +114,6 @@
       <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/polyfill-intl-grapheme" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/css-selector" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/routing" />
-      <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/polyfill-php83" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/mailer" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/polyfill-intl-normalizer" />
@@ -148,6 +144,10 @@
       <path value="$PROJECT_DIR$/gmao-backend/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/tymon/jwt-auth" />
       <path value="$PROJECT_DIR$/gmao-backend/vendor/php-open-source-saver/jwt-auth" />
+      <path value="$PROJECT_DIR$/gmao-backend/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/gmao-backend/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/gmao-backend/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/gmao-backend/vendor/symfony/polyfill-php83" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
