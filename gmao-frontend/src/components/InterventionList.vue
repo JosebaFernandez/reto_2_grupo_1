@@ -8,8 +8,8 @@
       <div v-for="intervencion in intervenciones" :key="intervencion.idIntervencion" class="card">
         <div class="intervenciones">
           <p class="card-text">{{ intervencion.tecnico.nombre + " " + intervencion.tecnico.apellido }}</p>
-          <p class="card-text">{{ intervencion.fechaInicio }} - {{ intervencion.fechaFin }}</p>
-          <p class="card-text">Motivo abandono: {{ intervencion.motivo }}</p>
+          <p class="card-text">{{ formatDate(intervencion.fechaInicio) }} - {{ formatDate(intervencion.fechaFin) }}</p>
+          <p v-if="intervencion.motivo != null" class="card-text">Motivo abandono: {{ intervencion.motivo }}</p>
           <p class="card-text">{{ intervencion.notas }}</p>
         </div>
       </div>
@@ -32,6 +32,17 @@
       this.fetchInterventions();
     },
     methods: {
+      formatDate(dateString) {
+      if (!dateString) return 'En curso';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+    },
       async fetchInterventions() {
         try {
           const response = await axios.get('http://127.0.0.1:8000/api/interventions/' + this.idIncidencia);

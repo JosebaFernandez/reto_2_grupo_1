@@ -5,7 +5,7 @@
     </div>
     <ul class="incident-info">
       <li>
-        <span class="info-label">Fecha:</span> {{ incidencia.fechaReporte }}
+        <span class="info-label">Fecha:</span> {{ formatDate(incidencia.fechaReporte) }}
       </li>
       <li>
         <span class="info-label">Máquina:</span> {{ incidencia.machine.nombre }}
@@ -154,6 +154,15 @@ export default {
         console.error("Error al tomar la incidencia:", error);
         alert("Ocurrió un error al registrar la intervención.");
       }
+    },
+    formatDate(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
     },
     async dejarIncidencia() {
       if (!this.leaveReason || !this.leaveComment) {
