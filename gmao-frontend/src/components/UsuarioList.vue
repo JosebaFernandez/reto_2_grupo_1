@@ -224,12 +224,17 @@ background-color: #84005d;
 color: white;
 margin-right: 10px;
 }
+.btn-registrar:hover {
+  background-color: #6d004d;
+}
 .btn-deshabilitar {
 background-color: #dc3545;
 color: white;
 margin-right: 10px;
 }
-
+.btn-deshabilitar:hover {
+  background-color: #c82333;
+}
 .modal-dialog {
   max-width: 400px;
 }

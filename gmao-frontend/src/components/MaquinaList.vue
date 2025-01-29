@@ -144,10 +144,16 @@ export default {
   margin-right: 10px;
   margin-left: 1em;
 }
+.btn-deshabilitar:hover {
+  background-color: #c82333;
+}
 .btn-registrar {
 background-color: #84005d;
 color: white;
 margin-right: 10px;
+}
+.btn-registrar:hover {
+  background-color: #6d004d;
 }
 .modal-dialog {
   max-width: 400px;

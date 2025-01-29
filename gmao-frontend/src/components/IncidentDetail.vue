@@ -304,6 +304,7 @@ export default {
 .incident-description {
   margin-top: 0.5em;
   font-style: italic;
+  text-align: justify;
 }
 
 .btn-registrar
@@ -315,6 +316,10 @@ export default {
 .btn-dejar{
   background-color: #84005d;
   color: white;
+}
+
+.btn-dejar,.btn-registrar:hover {
+  background-color: #6d004d;
 }
 
 .modal.fade .modal-dialog {

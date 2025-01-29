@@ -68,4 +68,7 @@ export default {
     background-color: #84005d;
     color: white;
 }
+.btn-registrar:hover {
+  background-color: #6d004d;
+}
 </style>
