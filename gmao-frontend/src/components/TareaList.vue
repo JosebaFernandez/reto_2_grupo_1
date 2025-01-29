@@ -8,7 +8,7 @@
         </h5>
         <p class="card-text">{{ tarea.descripcion }}</p>
         <button @click="openModal(tarea)" class="btn btn-registrar">Asignar a una máquina</button>
-        <button @click="abrirModalDeshabilitar(tarea)" class="btn btn-deshabilitar">
+        <button v-if="this.esAdmin()" @click="abrirModalDeshabilitar(tarea)" class="btn btn-deshabilitar">
             Deshabilitar
         </button>
       </div>
@@ -62,6 +62,9 @@ export default {
     this.fetchTareas();
   },
   methods: {
+    esAdmin(){
+      return localStorage.getItem("rol") === "admin";
+    },
     async fetchTareas() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/tasks");
