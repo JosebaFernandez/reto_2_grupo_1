@@ -64,8 +64,9 @@ Route::put('maintenances/{idMaquina}/{idTarea}', [MaintenanceController::class, 
 Route::put('/interventions/{idIntervencion}/leave', [InterventionController::class, 'leaveIntervention']);
 Route::post('/interventions/leave/{idIntervencion}', [InterventionController::class, 'leaveIntervention']);
 Route::get('/interventions/', [InterventionController::class, 'checkActiveIntervention']);
+Route::get('/interventions/{idIntervencion}', [InterventionController::class, 'getIntervencion']);
 
 Route::get('/tasks/find-by-name/{nombre}', [TaskController::class, 'findByName']);
 
-
+Route::get('/users/{idUsuario}', [UserController::class, 'getUsuario']);
 

@@ -17,15 +17,17 @@
         <span class="info-label">Tipo de avería:</span> {{ incidencia.breakdown.nombre }}
       </li>
       <li>
+        <hr>
         <p class="incident-description">{{ incidencia.descripcion }}</p>
+        <hr>
         <!-- Mostrar "Tomar incidencia" solo si no hay intervención activa -->
         <button v-if="!interventionActive && !thisInterventionActive" type="button" class="btn btn-registrar w-100"
           @click="tomarIncidencia(incidencia.idIncidencia)">
           Tomar incidencia
         </button>
-
+        
         <!-- Botón "Dejar incidencia" solo si hay intervención activa -->
-        <button v-if="thisInterventionActive" type="button" class="btn btn-registrar w-100" data-bs-toggle="modal"
+        <button v-if="thisInterventionActive" type="button" class="btn btn-registrar   w-100" data-bs-toggle="modal"
           data-bs-target="#leaveIncidentModal">
           Dejar incidencia
         </button>
@@ -146,10 +148,12 @@ export default {
         console.log("Intervención:", intervention);
         const response = await axios.post(
           "http://127.0.0.1:8000/api/interventions",
-          intervention
+          intervention       
         );
-        console.log("Intervención registrada:", response.data);
-
+        this.$emit("new-intervention",response.data);
+        this.thisInterventionActive = true;
+        this.leaveComment = "";
+        this.leaveReason = "";
       } catch (error) {
         console.error("Error al tomar la incidencia:", error);
         alert("Ocurrió un error al registrar la intervención.");
@@ -199,6 +203,7 @@ export default {
           `http://127.0.0.1:8000/api/interventions/${intervention.idIntervencion}/leave`,
           updatedIntervention
         );
+        this.$emit("new-intervention", response.data);
 
         if (this.leaveReason == "Incidencia resuelta") {
           const response = await axios.put(
@@ -301,10 +306,14 @@ export default {
   font-style: italic;
 }
 
-.btn-registrar,
-.btn-dejar {
+.btn-registrar
+ {
   background-color: #84005d;
   margin-top: 10px;
+  color: white;
+}
+.btn-dejar{
+  background-color: #84005d;
   color: white;
 }
 

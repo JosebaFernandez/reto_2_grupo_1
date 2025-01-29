@@ -3,10 +3,10 @@
         <div class="row">
             <!-- Lista de incidencias (columna de 8 unidades) -->
             <div class="col-sm-8">
-                <IncidentDetail :idIncidencia="idIncidencia" />
+                <IncidentDetail :idIncidencia="idIncidencia" @new-intervention="handleNewIntervention" />
             </div>            <!-- Formulario de reporte (columna de 4 unidades) -->
             <div class="col-sm-4">
-                <InterventionList :idIncidencia="idIncidencia" />
+                <InterventionList :idIncidencia="idIncidencia" ref="interventionList"/>
             </div>
         </div>
     </div>
@@ -27,6 +27,11 @@ export default {
             idIncidencia: this.$route.params.id,
         };
     },
+    methods: {
+        handleNewIntervention(newIntervention) {
+            this.$refs.interventionList.updateList(newIntervention);
+        },
+    }
 };
 </script>
 
