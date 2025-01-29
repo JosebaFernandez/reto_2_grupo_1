@@ -184,4 +184,7 @@ this.sele
   background-color: #84005d;
   color: white;
 }
+.btn-reportar:hover {
+  background-color: #6d004d;
+}
 </style>

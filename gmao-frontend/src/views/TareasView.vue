@@ -51,7 +51,7 @@ export default {
 }
 
 .open-modal-button:hover {
-    background-color: #620044;
+  background-color: #6d004d;
 }
 
 .btn-cerrar {

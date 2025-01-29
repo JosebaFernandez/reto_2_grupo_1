@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-      <h1>Entrar a GMAO</h1>
+      <h1><img src="../assets/logo_egibide_negro.png" style="width: 70%;"></h1>
       <form @submit.prevent="handleLogin">
         <div class="form-group">
           <input
@@ -114,7 +114,7 @@ input {
 .login-button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #800080;
+  background-color: #84005d;
   color: white;
   border: none;
   border-radius: 4px;
@@ -123,7 +123,7 @@ input {
 }
 
 .login-button:hover {
-  background-color: #5e005e;
+  background-color: #6d004d;
 }
 
 .forgot-password {

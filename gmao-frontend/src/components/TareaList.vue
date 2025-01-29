@@ -120,11 +120,18 @@ export default {
   color: white;
   margin-right: 10px;
 }
+.btn-deshabilitar:hover {
+  background-color: #c82333;
+}
 
 .btn-registrar {
   background-color: #84005d;
   color: white;
   margin-right: 10px;
+}
+
+.btn-registrar:hover {
+  background-color: #6d004d;
 }
 
 .modal-dialog {

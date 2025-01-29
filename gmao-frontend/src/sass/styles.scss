@@ -1,0 +1,155 @@
+/* Variables globales */
+$primary-color: #800080;
+$primary-hover-color: #5e005e;
+$secondary-color: #84005d;
+$secondary-hover-color: #620044;
+$background-color: white;
+$text-color: #333;
+$border-color: #ccc;
+$padding: 0.75rem;
+$border-radius: 4px;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+$max-width: 400px;
+
+/* --------------- LOGIN ------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $background-color;
+}
+
+.login-box {
+  background: $background-color;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: $box-shadow;
+  text-align: center;
+  width: 100%;
+  max-width: $max-width;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: $text-color;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: $padding;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+}
+
+.login-button {
+  width: 100%;
+  padding: $padding;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $primary-hover-color;
+  }
+}
+
+.forgot-password {
+  display: block;
+  margin-top: 1rem;
+  color: $primary-color;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.guest-access {
+  margin-top: 1.5rem;
+}
+
+.guest-button {
+  padding: $padding;
+  background-color: #f0f0f0;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+/* ------------- MAIN CONTAINER ------------------ */
+.main-container {
+  padding-top: 80px; /* Espacio para la cabecera fija */
+}
+
+/* ------------- HOME ------------------ */
+.scrollable {
+  position: fixed;
+  max-height: 80vh;
+  overflow-y: auto;
+  right: 5px;
+}
+
+/* ------------- OTROS -------------- */
+.otros-scrollable-list {
+  margin: 2em;
+  max-height: 300px;
+  min-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.form-select {
+  display: inline-block;
+  width: auto;
+}
+
+/* -------------- TAREAS -------------- */
+.open-modal-button {
+  background-color: $secondary-color;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $secondary-hover-color;
+  }
+}
+
+.btn-cerrar {
+  background-color: $border-color;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($border-color, 10%);
+  }
+}
+
+/* -------------- MAQUINAS -------------- */
+.fixed-right {
+    position: fixed;
+    right: 20px;
+}
+ 

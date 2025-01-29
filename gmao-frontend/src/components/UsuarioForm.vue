@@ -137,11 +137,15 @@ export default {
     color: white;
 }
 
+.btn-registrar:hover {
+    background-color: #6d004d;
+}
+
 .is-invalid {
-    border-color: red;
+    border-color: #dc3545;
 }
 
 .text-danger {
-    color: red;
+    color: #dc3545;
 }
 </style>

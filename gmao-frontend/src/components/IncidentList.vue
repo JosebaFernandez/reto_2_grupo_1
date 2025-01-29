@@ -29,9 +29,8 @@
         </p>
         <p class="card-text"><b>Maquina: </b>{{ incidencia.machine.nombre }}</p>
         <p class="card-text"><b>Gravedad: </b>{{ getGravedad(incidencia.gravedad) }}</p>
-        <p class="card-text"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
-        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre
-          }}</p>
+        <p class="card-text"><b>Averia: </b>{{ averias.find(averia => averia.idAveria === incidencia.idAveria)?.nombre}}</p>
+        <p class="card-text" style="text-align: justify;"><b>Descripcion: </b>{{ incidencia.descripcion }}</p>
       </div>
     </div>
 
@@ -183,10 +182,16 @@ export default {
   margin-right: 10px;
   margin-left: 1em;
 }
+.btn-deshabilitar:hover {
+  background-color: #c82333;
+}
 .btn-registrar {
 background-color: #84005d;
 color: white;
 margin-right: 10px;
+}
+.btn-registrar:hover {
+  background-color: #6d004d;
 }
 .modal-dialog {
   max-width: 400px;
@@ -199,5 +204,4 @@ margin-right: 10px;
 :deep(.modal.fade .modal-dialog) {
   transform: translate(0, 0);
 }
-
 </style>
