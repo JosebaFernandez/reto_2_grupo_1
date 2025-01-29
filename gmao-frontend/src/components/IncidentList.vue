@@ -20,7 +20,8 @@
           <router-link :to="{ name: 'IncidenciaView', params: { id: incidencia.idIncidencia } }">
             {{ incidencia.titulo }}
           </router-link>
-          <button @click="abrirModalDeshabilitar(incidencia)" class="btn btn-deshabilitar">
+          
+          <button v-if="this.esAdmin()" @click="abrirModalDeshabilitar(incidencia)" class="btn btn-deshabilitar">
             Deshabilitar
           </button>
         </h5>
@@ -95,6 +96,9 @@ export default {
     }
   },
   methods: {
+    esAdmin(){
+      return localStorage.getItem("rol") === "admin";
+    },
     async fetchIncidences() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/incidences");
