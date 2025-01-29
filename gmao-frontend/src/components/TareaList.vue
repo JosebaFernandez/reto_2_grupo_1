@@ -4,12 +4,13 @@
     <div v-for="tarea in tareas" :key="tarea.idTarea" class="card">
       <div class="card-body">
         <h5 class="card-title">{{ tarea.nombre }}
-          <button @click="abrirModalDeshabilitar(tarea)" class="btn btn-deshabilitar">
-            Deshabilitar
-          </button>
+          
         </h5>
         <p class="card-text">{{ tarea.descripcion }}</p>
         <button @click="openModal(tarea)" class="btn btn-registrar">Asignar a una máquina</button>
+        <button @click="abrirModalDeshabilitar(tarea)" class="btn btn-deshabilitar">
+            Deshabilitar
+        </button>
       </div>
     </div>
 
@@ -118,7 +119,6 @@ export default {
   background-color: #dc3545;
   color: white;
   margin-right: 10px;
-  margin-left: 1em;
 }
 
 .btn-registrar {

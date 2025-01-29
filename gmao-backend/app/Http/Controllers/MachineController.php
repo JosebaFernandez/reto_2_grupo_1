@@ -12,6 +12,7 @@ class MachineController
     {
         $machines = Machine::with('section')
                     ->where('habilitada', 1)
+                    ->orderBy('machines.prioridad')
                     ->get();
         return response()->json($machines);
     }

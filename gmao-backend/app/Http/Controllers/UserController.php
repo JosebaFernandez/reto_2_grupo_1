@@ -12,6 +12,10 @@ use App\Models\Task;
 
 class UserController
 {
+    public function getUsuario($idUsuario) {
+        $response = User::find($idUsuario);
+        return response()->json($response);
+    }
     public function index()
     {
         $users = User::where('habilitado', 1)
@@ -41,7 +45,7 @@ class UserController
             'rol' => $request->get('rol'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'habilitado' => 1, 
+            'habilitado' => 1,
         ]);
 
         return response()->json($user, 201);

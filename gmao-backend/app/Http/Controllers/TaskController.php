@@ -20,6 +20,7 @@ class TaskController
             'nombre' => 'required|string|unique:tasks,nombre',
             'descripcion' => 'required|string',
         ]);
+        $validatedData['habilitada'] = 1;
 
         $task = Task::create($validatedData);
 

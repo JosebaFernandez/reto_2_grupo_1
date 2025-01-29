@@ -29,7 +29,6 @@
       <div class="mb-3">
         <label for="severity" class="form-label">Selecciona la gravedad:</label>
         <select id="severity" class="form-select" v-model="selectedSeverity">
-          <option value="0"></option>
           <option value="1">Máquina parada</option>
           <option value="2">Máquina en marcha</option>
           <option value="3">Aviso</option>

@@ -17,6 +17,11 @@ class InterventionController
         return response()->json($intervenciones);
     }
 
+    public function getIntervencion($idIntervencion){
+        $intervencion = Intervention::with('tecnico')->where('idIntervencion', $idIntervencion)->get();
+        return response()->json($intervencion);
+    }
+
     // Existing method to store interventions
     public function store(Request $request)
     {
@@ -78,7 +83,7 @@ class InterventionController
         // Update the intervention with the new data
         $intervention->update($validated);
 
-        return response()->json(['message' => 'Intervention closed successfully', 'intervention' => $intervention]);
+        return response()->json($intervention);
     }
 
     // New method to update an intervention

@@ -51,6 +51,35 @@
           console.error('Error al obtener las intervenciones:', error);
         }
       },
+      async getUsuario(idUsuario) {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/users/' + idUsuario);
+          console.log("Usuario: ", response.data);
+          return response.data;
+          
+        } catch (error) {
+          console.error('Error al obtener el usuario:', error);
+        }
+      },
+      async updateList(newIntervention) {
+        if(this.hayIntervencion(newIntervention.idIntervencion)) {
+          this.borrarIntervencionPorId(newIntervention.idIntervencion);
+        }
+        console.log("Nueva intervención: ", newIntervention);
+        const $user = await this.getUsuario(newIntervention.idTecnico);
+        newIntervention.tecnico = $user;
+        this.intervenciones.push(newIntervention);
+      },
+      borrarIntervencionPorId(id) {
+        const i = this.intervenciones.findIndex(intervencion => intervencion.idIntervencion === id);
+        if(i !== -1) {
+          this.intervenciones.splice(i, 1);
+        }
+      },
+      hayIntervencion(id) {
+        return this.intervenciones.some(intervencion => intervencion.idIntervencion === id);
+      }
+    
     },
   };
   </script>
